@@ -119,7 +119,7 @@
   longest_session_km: 11.7
   max_elevation_m:    771
   physio_done:        true
-  protein_5days:      true
+  protein_5days:      false
   recovery:           4
 - date: 2026-02-02
   weight:        78.2
