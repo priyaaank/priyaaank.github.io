@@ -4,12 +4,12 @@
 
 heading: Navigate
 items:
-  - label: About
+  - label: About Me
     url:   /
   - label: Writing
     url:   /writing/
-  - label: Health
+  - label: Health Data
     url:   /health/
-  - label: Roadtripp
+  - label: Travelouge
     url:   https://roadtripp.in
     external: true
