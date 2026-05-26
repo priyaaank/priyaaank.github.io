@@ -285,24 +285,32 @@
     }
 
     let done = 0, total = 0;
+    const cellEls = [];
     for (const c of cells) {
       if (c.v === true)  { done++; total++; }
       if (c.v === false) { total++; }
       const cell = document.createElement('div');
       cell.className = 'ccell ' + c.cls;
-      const unit = cadence === 'weekly' ? ' week of ' : ': ';
-      cell.title = (cadence === 'weekly' ? 'Week of ' : '') + c.key + unit + (
-        c.v === true ? 'done' : c.v === false ? 'missed' : 'no data'
-      );
+      const prefix = cadence === 'weekly' ? 'Week of ' : '';
+      const status = c.v === true ? 'done' : c.v === false ? 'missed' : 'no data';
+      cell.dataset.tip = prefix + c.key + ' · ' + status;
       grid.appendChild(cell);
+      cellEls.push(cell);
     }
 
     const sub = el.querySelector('[data-consistency-sub]');
+    const label = cadence === 'weekly' ? 'weeks' : 'days';
+    const summary = total
+      ? done + '/' + total + ' ' + label + ' · ' + Math.round(100 * done / total) + '%'
+      : '';
     if (sub) {
-      const label = cadence === 'weekly' ? 'weeks' : 'days';
-      sub.textContent = total
-        ? done + '/' + total + ' ' + label + ' · ' + Math.round(100 * done / total) + '%'
-        : '';
+      sub.textContent = summary;
+      // In-widget hover label: route cell tooltips through the subtitle so
+      // they don't escape the widget bounds the way native `title` does.
+      for (const c of cellEls) {
+        c.addEventListener('mouseenter', () => { sub.textContent = c.dataset.tip; });
+        c.addEventListener('mouseleave', () => { sub.textContent = summary; });
+      }
     }
   };
 

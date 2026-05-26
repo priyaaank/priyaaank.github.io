@@ -203,15 +203,7 @@ sections:
         target:   140
         cadence:  daily
         color:    sage
-        span:     2
-
-      - type:     stat
-        title:    Avg fibre
-        metric:   fibre_g
-        unit:     g
-        decimals: 0
-        target:   30
-        color:    sage
+        span:     3
 
       - type:     line
         title:    Fibre intake
@@ -221,7 +213,15 @@ sections:
         target:   30
         cadence:  daily
         color:    sage
-        span:     2
+        span:     3
+      
+      - type:     stat
+        title:    Avg fibre
+        metric:   fibre_g
+        unit:     g
+        decimals: 0
+        target:   30
+        color:    sage
 
       - type:     gauge
         title:    Water today
@@ -239,7 +239,7 @@ sections:
         target:   3
         cadence:  daily
         color:    teal
-        span:     2
+        span:     3
 
   - id: weekly
     title: Weekly check-in
