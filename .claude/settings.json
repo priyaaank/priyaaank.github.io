@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -sLv -A \"Mozilla/5.0 \\(Macintosh; Intel Mac OS X 10_15_7\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/120.0.0.0 Safari/537.36\" \"https://medium.com/inspiredbrilliance/psychology-of-learned-helplessness-to-tackle-issues-in-engineering-teams-d99b0c42f141\" -o /tmp/learned-helplessness.html --max-time 30)"
+    ]
+  }
+}
