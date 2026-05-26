@@ -2,8 +2,10 @@
    Health dashboard — client-side renderer.
 
    Reads:
-     #health-config     JSON (range_default, range_presets, sections, source_url)
-     CONFIG.source_url  Published Google Sheet CSV, fetched at boot
+     #health-config             JSON (range_default, range_presets, sections,
+                                source_url, weekly_source_url)
+     CONFIG.source_url          Published Google Sheet CSV (daily tab), fetched at boot
+     CONFIG.weekly_source_url   Optional weekly tab CSV, merged into daily by date
 
    Then for each [data-widget] in the DOM, computes stats and paints
    the widget body. Re-runs on time-range change.
@@ -60,17 +62,52 @@
     return rows;
   }
 
-  async function loadLog() {
-    if (!CONFIG.source_url) throw new Error('No source_url configured');
-    const res = await fetch(CONFIG.source_url, { credentials: 'omit' });
+  async function fetchCSV(url) {
+    const res = await fetch(url, { credentials: 'omit' });
     if (!res.ok) throw new Error('CSV fetch failed: ' + res.status);
     return parseCSV(await res.text());
+  }
+
+  // Outer-join two row sets on `date`. Weekly entries (Sundays) typically
+  // sit on dates that also have a daily entry, so we copy weekly columns
+  // into the daily row; dates that exist only on one side pass through.
+  function mergeByDate(primary, secondary) {
+    const byDate = new Map();
+    for (const r of primary) byDate.set(r.date, { ...r });
+    for (const r of secondary) {
+      const existing = byDate.get(r.date);
+      if (existing) Object.assign(existing, r);
+      else byDate.set(r.date, { ...r });
+    }
+    return Array.from(byDate.values());
+  }
+
+  async function loadLog() {
+    if (!CONFIG.source_url) throw new Error('No source_url configured');
+
+    // Daily is required; weekly is best-effort so a broken/unpublished
+    // weekly tab doesn't take the whole dashboard down.
+    const [dailyRes, weeklyRes] = await Promise.allSettled([
+      fetchCSV(CONFIG.source_url),
+      CONFIG.weekly_source_url ? fetchCSV(CONFIG.weekly_source_url) : Promise.resolve(null),
+    ]);
+
+    if (dailyRes.status !== 'fulfilled') throw dailyRes.reason;
+    const daily = dailyRes.value;
+
+    if (weeklyRes.status === 'fulfilled' && weeklyRes.value) {
+      return mergeByDate(daily, weeklyRes.value);
+    }
+    if (weeklyRes.status === 'rejected') {
+      console.warn('Weekly log fetch failed:', weeklyRes.reason);
+    }
+    return daily;
   }
 
   // Cache the last successful parse so subsequent visits paint instantly
   // and only swap when the fresh fetch returns. Bump CACHE_KEY when the
   // log schema changes.
-  const CACHE_KEY = 'health-log-cache-v1';
+  const CACHE_KEY = 'health-log-cache-v2';
   function readCache() {
     try {
       const raw = localStorage.getItem(CACHE_KEY);

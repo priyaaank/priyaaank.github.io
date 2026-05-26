@@ -26,6 +26,10 @@
 # Fetched client-side at page load.
 source_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR1KuBIXuMYaL-Jq05IE0-IqoVJLJ7bNEJg32x7ttuOXGo2vZI_knNw3mToozdIIWlfGyFu-zcW3hWm/pub?output=csv"
 
+# Optional second CSV (Weekly tab) — same publish-to-web flow, different
+# `gid`. Fetched in parallel and merged into the daily log by date.
+weekly_source_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR1KuBIXuMYaL-Jq05IE0-IqoVJLJ7bNEJg32x7ttuOXGo2vZI_knNw3mToozdIIWlfGyFu-zcW3hWm/pub?gid=301882595&single=true&output=csv"
+
 # Default lookback for the dashboard (days). Switch in the UI.
 range_default: 30
 
