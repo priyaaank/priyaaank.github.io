@@ -1,0 +1,17 @@
+# "Find me elsewhere" pill row, near the bottom of the homepage.
+
+- label: priyaaank@gmail.com
+  url:   mailto:priyaaank@gmail.com
+  icon:  mail
+
+- label: GitHub
+  url:   https://github.com/priyaaank
+  icon:  github
+
+- label: LinkedIn
+  url:   https://linkedin.com/in/priyaaank
+  icon:  linkedin
+
+- label: RSS
+  url:   /feed.xml
+  icon:  rss

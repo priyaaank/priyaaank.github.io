@@ -1,0 +1,13 @@
+# Small social icons at the bottom of the sidebar.
+
+- label: Email
+  url:   mailto:priyankg@sahaj.ai
+  icon:  mail
+
+- label: GitHub
+  url:   https://github.com/priyaaank
+  icon:  github
+
+- label: RSS
+  url:   /feed.xml
+  icon:  rss

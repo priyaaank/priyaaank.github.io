@@ -1,0 +1,65 @@
+# ============================================================
+# priyaaank.com — site configuration
+# Content is sourced from _data/*.yml and _writing / _health / _pages.
+# Visual layer lives in _layouts, _includes, and assets/css.
+# ============================================================
+
+title:       Priyank Gupta
+tagline:     Writing, building, and tinkering.
+description: >
+  Personal site of Priyank Gupta — tech writing, projects, health
+  experiments, and assorted notes.
+author:      Priyank Gupta
+email:       priyankg@sahaj.ai
+url:         "https://priyaaank.com"
+baseurl:     ""
+
+# ---------- Collections ----------
+collections:
+  writing:
+    output:    true
+    permalink: /writing/:slug/
+  health:
+    output:    true
+    permalink: /health/:slug/
+  pages:
+    output:    true
+    permalink: /:path/
+
+# ---------- Default front matter ----------
+defaults:
+  - scope:
+      path: ""
+      type: writing
+    values:
+      layout:  post
+      section: writing
+  - scope:
+      path: ""
+      type: health
+    values:
+      layout:  post
+      section: health
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: page
+
+# ---------- Jekyll plumbing ----------
+markdown:    kramdown
+highlighter: rouge
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - Dockerfile
+  - docker-compose.yml
+  - .dockerignore
+  - node_modules
+  - vendor

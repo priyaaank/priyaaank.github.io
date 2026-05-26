@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en">
+{% include head.html %}
+<body>
+  <div class="app">
+    {% include sidebar.html %}
+    <main>
+      {{ content }}
+      {% include page-footer.html %}
+    </main>
+  </div>
+</body>
+</html>

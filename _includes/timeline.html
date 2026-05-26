@@ -1,0 +1,19 @@
+<aside class="timeline">
+  <h2>{{ site.data.home.milestones_heading }}</h2>
+  <p class="sub">{{ site.data.home.milestones_subtitle }}</p>
+
+  {%- for year in site.data.milestones -%}
+    <div class="year">{{ year.year }}</div>
+    <ol class="events">
+      {%- for event in year.events -%}
+        <li class="event">
+          <div class="when">{{ event.date }}</div>
+          <div class="note">
+            <h3>{{ event.title }}</h3>
+            <p>{{ event.summary }}</p>
+          </div>
+        </li>
+      {%- endfor -%}
+    </ol>
+  {%- endfor -%}
+</aside>

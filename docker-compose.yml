@@ -1,0 +1,12 @@
+services:
+  site:
+    build: .
+    container_name: priyaaank-site
+    ports:
+      - "4000:4000"     # http://localhost:4000
+      - "35729:35729"   # livereload
+    volumes:
+      # Mount the project so edits to .md, _data/*.yml, layouts, and CSS
+      # are picked up live. Gems stay at /usr/local/bundle inside the
+      # image and aren't affected by this mount.
+      - .:/site

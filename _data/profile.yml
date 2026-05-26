@@ -1,0 +1,12 @@
+# Sidebar profile block.
+# To use a photo: drop the file at /assets/avatar.jpg (or similar)
+# and uncomment the `avatar:` line below. Otherwise `initials` is shown.
+
+name:     Priyank Gupta
+role:     Engineer · Writer · Tinkerer
+initials: PG
+avatar: /assets/profile.jpeg
+
+resume:
+  url:   /assets/resume.pdf
+  label: Resume (PDF)

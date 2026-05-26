@@ -1,0 +1,7 @@
+# Small bits of homepage copy that aren't really "content" but
+# shouldn't be hard-coded in templates either.
+
+greeting:            Hello there
+sections_heading:    Where to go from here
+elsewhere_heading:   Find me elsewhere
+footer_note:         Made slowly, in spare hours.

@@ -1,0 +1,33 @@
+# Homepage "Where to go from here" cards.
+# `icon` matches a name in _includes/icon.html — to add a new icon,
+# add a `{% when "name" %}` branch there.
+
+- key:         writing
+  title:       Writing
+  badge:       Tech blog
+  description: >
+    A collected home for my essays and technical notes on architecture,
+    craft, and the systems I keep ending up inside.
+  cta:  Read articles
+  url:  /writing/
+  icon: pen
+
+- key:         health
+  title:       Health
+  badge:       Data + Experiments
+  description: >
+    Two things in one place — a live view of my daily activity and life
+    data, and write-ups on the experiments and goals behind it.
+  cta:  See the log
+  url:  /health/
+  icon: activity
+
+- key:         roadtripp
+  title:       Roadtripp
+  badge:       Side project ↗
+  description: >
+    Plan, save, and revisit road trips. The side project I keep coming
+    back to — built slowly, on my own terms.
+  cta:  Visit roadtripp.in
+  url:  https://roadtripp.in
+  icon: pin

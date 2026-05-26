@@ -1,0 +1,49 @@
+{%- assign profile = site.data.profile -%}
+{%- assign nav = site.data.nav -%}
+<aside class="sidebar">
+  <div class="profile">
+    <div class="avatar">
+      {%- if profile.avatar -%}
+        <img src="{{ profile.avatar | relative_url }}" alt="{{ profile.name }}">
+      {%- else -%}
+        <span class="initials">{{ profile.initials }}</span>
+      {%- endif -%}
+    </div>
+    <div>
+      <div class="name">{{ profile.name }}</div>
+      <div class="role">{{ profile.role }}</div>
+    </div>
+  </div>
+
+  <div>
+    <div class="nav-label">{{ nav.heading }}</div>
+    <nav class="primary">
+      {%- for item in nav.items -%}
+        {%- assign is_active = false -%}
+        {%- if item.url == page.url -%}{%- assign is_active = true -%}{%- endif -%}
+        <a href="{{ item.url }}"{% if is_active %} class="active"{% endif %}{% if item.external %} target="_blank" rel="noopener noreferrer"{% endif %}>
+          <span class="dot"></span> {{ item.label }}
+          {%- if item.external %} <span class="ext">↗</span>{%- endif -%}
+        </a>
+      {%- endfor -%}
+    </nav>
+  </div>
+
+  <div class="sidebar-foot">
+    {%- if profile.resume.url -%}
+    <a href="{{ profile.resume.url | relative_url }}" class="resume-btn">
+      {% include icon.html name="download" %}
+      {{ profile.resume.label }}
+      <span class="arrow">→</span>
+    </a>
+    {%- endif -%}
+
+    <div class="socials">
+      {%- for s in site.data.socials -%}
+        <a href="{{ s.url }}" title="{{ s.label }}" aria-label="{{ s.label }}">
+          {% include icon.html name=s.icon %}
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</aside>

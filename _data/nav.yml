@@ -1,0 +1,15 @@
+# Sidebar primary navigation.
+# `external: true` shows a small ↗ marker and opens nothing special
+# (the URL handles its own target).
+
+heading: Navigate
+items:
+  - label: About
+    url:   /
+  - label: Writing
+    url:   /writing/
+  - label: Health
+    url:   /health/
+  - label: Roadtripp
+    url:   https://roadtripp.in
+    external: true

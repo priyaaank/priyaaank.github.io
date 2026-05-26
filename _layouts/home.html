@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+{% include head.html %}
+<body>
+  <div class="app">
+    {% include sidebar.html %}
+
+    <main>
+      <section class="hero">
+        {%- assign greeting = page.greeting | default: site.data.home.greeting -%}
+        {%- if greeting -%}
+        <span class="greeting"><span class="wave">👋</span> {{ greeting }}</span>
+        {%- endif -%}
+
+        {{ content }}
+
+        {%- if site.data.currently and site.data.currently.size > 0 -%}
+        <div class="currently">
+          <div class="head"><span class="pulse"></span> Currently</div>
+          <ul>
+            {%- for item in site.data.currently -%}
+            <li>
+              <span class="tag">{{ item.tag }}</span>
+              <span>{{ item.text | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</span>
+            </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+        {%- endif -%}
+      </section>
+
+      {%- if site.data.sections and site.data.sections.size > 0 -%}
+      <div class="section-head">
+        <h2>{{ site.data.home.sections_heading }}</h2>
+        <span class="label">{{ site.data.sections | size }} places</span>
+      </div>
+      <div class="cards">
+        {%- for s in site.data.sections -%}
+        {%- assign s_external = s.url contains '://' -%}
+        <a href="{{ s.url }}" class="card"{% if s_external %} target="_blank" rel="noopener noreferrer"{% endif %}>
+          <div class="top">
+            <div class="icon">{% include icon.html name=s.icon %}</div>
+            <span class="badge">{{ s.badge }}</span>
+          </div>
+          <h3>{{ s.title }}</h3>
+          <p>{{ s.description }}</p>
+          <span class="cta">{{ s.cta }} →</span>
+        </a>
+        {%- endfor -%}
+      </div>
+      {%- endif -%}
+
+      {%- if site.data.elsewhere and site.data.elsewhere.size > 0 -%}
+      <div class="section-head" style="margin-top: 64px;">
+        <h2>{{ site.data.home.elsewhere_heading }}</h2>
+      </div>
+      <div class="elsewhere">
+        {%- for link in site.data.elsewhere -%}
+        <a href="{{ link.url }}">
+          {% include icon.html name=link.icon %}
+          {{ link.label }}
+        </a>
+        {%- endfor -%}
+      </div>
+      {%- endif -%}
+
+      {% include page-footer.html %}
+    </main>
+  </div>
+</body>
+</html>
