@@ -8,7 +8,7 @@ markdown or YAML file; templates only hold structure.
 | File or folder                  | What it controls                                     |
 |---------------------------------|------------------------------------------------------|
 | [index.md](index.md)            | Homepage hero — H1 + bio paragraphs                  |
-| [_data/profile.yml](_data/profile.yml)         | Name, role, initials/photo, resume link    |
+| [_data/profile.yml](_data/profile.yml)         | Name, role, initials/photo, resume link, and the homepage "Also showing up at" pills |
 | [_data/nav.yml](_data/nav.yml)                 | Sidebar primary navigation                 |
 | [_data/currently.yml](_data/currently.yml)     | "Currently" stripe on the homepage         |
 | [_data/sections.yml](_data/sections.yml)       | The three homepage cards                   |
@@ -18,7 +18,6 @@ markdown or YAML file; templates only hold structure.
 | [_data/home.yml](_data/home.yml)               | Section headings, footer note, etc.        |
 | [_writing/](_writing/)          | Tech blog posts — one `.md` per article              |
 | [_health/](_health/)            | Health experiments — one `.md` per write-up          |
-| [_pages/about.md](_pages/about.md) | About page                                        |
 | [_pages/writing-index.md](_pages/writing-index.md) and [health-index.md](_pages/health-index.md) | Section listing pages |
 
 ## Where the visual layer lives

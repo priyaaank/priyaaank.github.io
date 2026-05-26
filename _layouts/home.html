@@ -17,14 +17,14 @@
         {%- if site.data.currently and site.data.currently.size > 0 -%}
         <div class="currently">
           <div class="head"><span class="pulse"></span> Currently</div>
-          <ul>
+          <div class="currently-grid">
             {%- for item in site.data.currently -%}
-            <li>
-              <span class="tag">{{ item.tag }}</span>
-              <span>{{ item.text | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</span>
-            </li>
+            <div class="currently-card">
+              <div class="currently-card-tag">{{ item.tag }}</div>
+              <div class="currently-card-text">{{ item.text | markdownify | remove: '<p>' | remove: '</p>' | strip_newlines }}</div>
+            </div>
             {%- endfor -%}
-          </ul>
+          </div>
         </div>
         {%- endif -%}
       </section>
@@ -45,6 +45,20 @@
           <h3>{{ s.title }}</h3>
           <p>{{ s.description }}</p>
           <span class="cta">{{ s.cta }} →</span>
+        </a>
+        {%- endfor -%}
+      </div>
+      {%- endif -%}
+
+      {%- if site.data.profile.profiles and site.data.profile.profiles.size > 0 -%}
+      <div class="section-head" style="margin-top: 64px;">
+        <h2>{{ site.data.home.profiles_heading }}</h2>
+      </div>
+      <div class="elsewhere">
+        {%- for link in site.data.profile.profiles -%}
+        <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer">
+          {% include icon.html name=link.icon %}
+          {{ link.label }}
         </a>
         {%- endfor -%}
       </div>

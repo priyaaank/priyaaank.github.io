@@ -225,14 +225,11 @@ main {
 }
 .hero p a { font-weight: 600; }
 
-/* Currently */
+/* Currently — stat-grid style: one subtle card per item, mirrors the
+   health-dashboard widget aesthetic (uppercase label on top, body
+   text below). */
 .currently {
   margin-top: 36px;
-  padding: 22px 24px;
-  background: var(--card);
-  border-radius: 14px;
-  border: 1px solid var(--rule);
-  box-shadow: 0 1px 0 rgba(0,0,0,0.02);
 }
 .currently .head {
   display: flex; align-items: center; gap: 10px;
@@ -253,27 +250,53 @@ main {
   0%, 100% { box-shadow: 0 0 0 4px var(--tint); }
   50%     { box-shadow: 0 0 0 7px transparent; }
 }
-.currently ul {
-  list-style: none; padding: 0; margin: 0;
+.currently-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 14px 24px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 18px;
 }
-.currently li {
-  display: flex; align-items: flex-start; gap: 12px;
-  font-size: 0.95rem;
-}
-.currently li .tag {
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 3px 8px;
-  border-radius: 6px;
-  white-space: nowrap;
-  background: var(--tint);
-  color: var(--ink-2);
+.currently-card {
+  background: var(--card);
   border: 1px solid var(--rule);
+  border-radius: 14px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 120px;
+  transition: border-color 0.15s;
+}
+.currently-card:hover { border-color: #cdc7b6; }
+.currently-card-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+}
+.currently-card-tag::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ink);
+  flex: 0 0 auto;
+}
+/* Cycle a warm accent across the dots so each card reads as its
+   own item. Colors lifted from the health dashboard palette. */
+.currently-card:nth-child(3n+1) .currently-card-tag::before { background: #b45309; } /* amber  */
+.currently-card:nth-child(3n+2) .currently-card-tag::before { background: #0f766e; } /* teal   */
+.currently-card:nth-child(3n)   .currently-card-tag::before { background: #4d6a3a; } /* sage   */
+.currently-card-text {
+  font-size: 1rem;
+  line-height: 1.45;
+  color: var(--ink);
+  margin-top: auto;
 }
 
 /* Section header */

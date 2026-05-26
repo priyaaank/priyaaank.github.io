@@ -1,6 +1,6 @@
-# Sidebar profile block.
-# To use a photo: drop the file at /assets/avatar.jpg (or similar)
-# and uncomment the `avatar:` line below. Otherwise `initials` is shown.
+# Sidebar profile block + the "Also showing up at" pill row on the
+# homepage. To use a photo: drop the file at /assets/avatar.jpg (or
+# similar) and set `avatar:` below. Otherwise `initials` is shown.
 
 name:     Priyank Gupta
 role:     Engineer · Writer · Tinkerer
@@ -8,5 +8,25 @@ initials: P
 avatar: /assets/profile.jpeg
 
 resume:
-  url:   /assets/resume.pdf
+  url:   /assets/PriyankGupta - Profile.pdf
   label: Profile (PDF)
+
+# External profiles surfaced as the "Also showing up at" pill row on
+# the homepage. Distinct from _data/elsewhere.yml, which is reserved
+# for socials / contact channels.
+profiles:
+  - label: O'Reilly · Distributed systems training
+    url:   https://www.oreilly.com/live-events/design-patterns-for-distributed-systems/0636920061982/0636920091739/
+    icon:  book-open
+
+  - label: TechTarget · Author
+    url:   https://www.techtarget.com/contributor/Priyank-Gupta
+    icon:  file-text
+
+  - label: Rang De · Investor
+    url:   https://www.rangde.in/priyank
+    icon:  heart
+
+  - label: Duolingo · German streak
+    url:   https://www.duolingo.com/profile/PriyankGup
+    icon:  flame

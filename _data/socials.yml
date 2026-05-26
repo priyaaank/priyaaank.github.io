@@ -8,6 +8,10 @@
   url:   https://github.com/priyaaank
   icon:  github
 
+- label: LinkedIn
+  url:   https://linkedin.com/in/priyaaank
+  icon:  linkedin
+
 - label: RSS
   url:   /feed.xml
   icon:  rss
