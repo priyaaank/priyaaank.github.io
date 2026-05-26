@@ -48,16 +48,6 @@ sections:
         target:   75
         color:    ink
 
-      - type:     line
-        title:    Body weight
-        metric:   weight
-        unit:     kg
-        decimals: 1
-        target:   75
-        cadence:  daily
-        color:    ink
-        span:     2
-
       - type:     stat
         title:    Resting HR
         metric:   resting_hr
@@ -72,14 +62,23 @@ sections:
         decimals: 1
         target:   7.5
         color:    teal
-
+      
+      - type:     stat
+        title:    Avg energy
+        metric:   energy
+        unit:     /5
+        decimals: 1
+        target:   4
+        color:    amber
+      
       - type:     line
-        title:    Resting heart rate
-        metric:   resting_hr
-        unit:     bpm
-        decimals: 0
+        title:    Body weight
+        metric:   weight
+        unit:     kg
+        decimals: 1
+        target:   75
         cadence:  daily
-        color:    rose
+        color:    ink
         span:     2
 
       - type:     line
@@ -91,14 +90,15 @@ sections:
         cadence:  daily
         color:    teal
         span:     2
-
-      - type:     stat
-        title:    Avg energy
-        metric:   energy
-        unit:     /5
-        decimals: 1
-        target:   4
-        color:    amber
+      
+      - type:     line
+        title:    Resting heart rate
+        metric:   resting_hr
+        unit:     bpm
+        decimals: 0
+        cadence:  daily
+        color:    rose
+        span:     2
 
       - type:     line
         title:    Energy level
@@ -121,6 +121,28 @@ sections:
         target:   8000
         color:    amber
 
+      - type:     stat
+        title:    Avg active kcal
+        metric:   active_kcal
+        unit:     kcal
+        decimals: 0
+        color:    rose
+      
+      - type:     stat
+        title:    Avg floors
+        metric:   floors
+        decimals: 0
+        color:    sage
+
+      - type:     bar
+        title:    Pack weight carried
+        metric:   pack_kg
+        unit:     kg
+        decimals: 1
+        cadence:  daily
+        color:    ink
+        span:     1
+
       - type:     bar
         title:    Steps per day
         metric:   steps
@@ -131,13 +153,6 @@ sections:
         color:    amber
         span:     2
 
-      - type:     stat
-        title:    Avg active kcal
-        metric:   active_kcal
-        unit:     kcal
-        decimals: 0
-        color:    rose
-
       - type:     line
         title:    Active calories
         metric:   active_kcal
@@ -147,27 +162,12 @@ sections:
         color:    rose
         span:     2
 
-      - type:     stat
-        title:    Avg floors
-        metric:   floors
-        decimals: 0
-        color:    sage
-
       - type:     bar
         title:    Floors climbed
         metric:   floors
         decimals: 0
         cadence:  daily
         color:    sage
-        span:     2
-
-      - type:     bar
-        title:    Pack weight carried
-        metric:   pack_kg
-        unit:     kg
-        decimals: 1
-        cadence:  daily
-        color:    ink
         span:     2
 
       - type:     category

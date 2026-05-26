@@ -21,7 +21,9 @@
       "Bash(curl -s -o /dev/null -w \"status=%{http_code} size=%{size_download}\\\\n\" http://localhost:4000/health/notes/)",
       "Bash(curl -s -o /dev/null -w \"status=%{http_code} size=%{size_download}\\\\n\" http://localhost:4000/assets/css/health.css)",
       "Bash(curl -s -o /dev/null -w \"status=%{http_code} size=%{size_download}\\\\n\" http://localhost:4000/assets/js/health-dashboard.js)",
-      "Bash(curl -s -o /dev/null -w \"css size=%{size_download}\\\\n\" http://localhost:4000/assets/css/health.css)"
+      "Bash(curl -s -o /dev/null -w \"css size=%{size_download}\\\\n\" http://localhost:4000/assets/css/health.css)",
+      "WebSearch",
+      "WebFetch(domain:www.githubstatus.com)"
     ],
     "additionalDirectories": [
       "/Users/priyank/code/priyaaank.com/_data"
