@@ -104,3 +104,22 @@ bundle exec jekyll serve
 ```
 
 Site at <http://localhost:4000>.
+
+## Deploying to GitHub Pages
+
+A GitHub Actions workflow at
+[.github/workflows/deploy.yml](.github/workflows/deploy.yml) builds and
+deploys the site on every push to `main` (and on manual dispatch from the
+Actions tab).
+
+**One-time setup** in the repo on GitHub:
+
+1. **Settings → Pages → Build and deployment → Source = "GitHub Actions"**
+2. (Optional) **Settings → Pages → Custom domain** — set `priyaaank.com`
+   if you're using the apex domain. GitHub then creates the `CNAME`
+   file on every deploy automatically; nothing in this repo needs to
+   change.
+
+Push to `main` and the workflow does the rest. The deployed URL is
+shown on the workflow run summary and on the `github-pages` environment
+page.

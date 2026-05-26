@@ -1,0 +1,65 @@
+# Build the Jekyll site and deploy to GitHub Pages.
+#
+# One-time setup in the repo: Settings → Pages → Build and deployment
+# source = "GitHub Actions".
+#
+# For a custom domain (e.g. priyaaank.com): set it once under Settings →
+# Pages → Custom domain. GitHub will create a CNAME file in the deployed
+# artifact automatically.
+
+name: Deploy site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Permissions required by actions/deploy-pages.
+permissions:
+  contents: read
+  pages:    write
+  id-token: write
+
+# Avoid stomping on a deploy that's mid-flight, but don't cancel it —
+# a half-deployed Pages site is worse than a queued one.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true   # caches gems based on Gemfile.lock
+
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Build
+        env:
+          JEKYLL_ENV: production
+        # base_path is empty on a user/custom-domain site and `/repo-name`
+        # on a project site; passing it through keeps both cases working.
+        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url:  ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
