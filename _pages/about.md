@@ -15,5 +15,5 @@ over hot takes. This site is where the long-form notes live.
 
 ### Get in touch
 
-- Email: [priyankg@sahaj.ai](mailto:priyankg@sahaj.ai)
+- Email: [priyaaank@gmail.com](mailto:priyaaank@gmail.com)
 - GitHub: [@priyaaank](https://github.com/priyaaank)
