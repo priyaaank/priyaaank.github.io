@@ -1,0 +1,95 @@
+---
+layout: default
+---
+{%- comment -%}
+  Renders the health dashboard from the DSL in _data/health/widgets.yml.
+
+  Strategy: emit empty widget shells with data-* attributes plus the raw
+  log as a JSON blob, then let assets/js/health-dashboard.js compute and
+  paint everything client-side. This keeps stat/streak math, range
+  switching, and chart rendering in one place (JS) instead of half in
+  Liquid, half in JS.
+{%- endcomment -%}
+{%- assign cfg = site.data.health.widgets -%}
+{%- assign log = site.data.health.log -%}
+
+<link rel="stylesheet" href="{{ '/assets/css/health.css' | relative_url }}">
+
+<article class="health-dashboard">
+  <header class="dash-head">
+    <div>
+      <h1>{{ page.title }}</h1>
+      {%- if page.subtitle -%}
+        <p class="subtitle">{{ page.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="dash-controls">
+      <div class="range-switcher" data-range-switcher
+           data-default="{{ cfg.range_default | default: 90 }}">
+        {%- for r in cfg.range_presets -%}
+          <button type="button"
+                  class="range-btn{% if r.days == cfg.range_default %} active{% endif %}"
+                  data-range="{{ r.days }}">{{ r.label }}</button>
+        {%- endfor -%}
+      </div>
+      <a class="notes-link" href="{{ '/health/notes/' | relative_url }}">
+        Notes &amp; writeups →
+      </a>
+    </div>
+  </header>
+
+  {%- for section in cfg.sections -%}
+  <section class="dash-section" id="section-{{ section.id }}">
+    <div class="dash-section-head">
+      <h2>{{ section.title }}</h2>
+      {%- if section.description -%}
+        <p>{{ section.description }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="widget-grid">
+      {%- for w in section.widgets -%}
+        {%- assign span = w.span | default: 1 -%}
+        <div class="widget widget--{{ w.type }} span-{{ span }} color-{{ w.color | default: 'ink' }}"
+             data-widget
+             data-type="{{ w.type }}"
+             data-metric="{{ w.metric }}"
+             data-title="{{ w.title | escape }}"
+             data-unit="{{ w.unit | default: '' }}"
+             data-decimals="{{ w.decimals | default: 1 }}"
+             data-target="{{ w.target }}"
+             data-cadence="{{ w.cadence | default: 'daily' }}"
+             data-color="{{ w.color | default: 'ink' }}">
+          {%- case w.type -%}
+            {%- when 'stat'        -%}{% include health/stat.html        w=w %}
+            {%- when 'line'        -%}{% include health/line.html        w=w %}
+            {%- when 'bar'         -%}{% include health/bar.html         w=w %}
+            {%- when 'consistency' -%}{% include health/consistency.html w=w %}
+            {%- when 'streak'      -%}{% include health/streak.html      w=w %}
+            {%- when 'gauge'       -%}{% include health/gauge.html       w=w %}
+            {%- when 'category'    -%}{% include health/category.html    w=w %}
+            {%- else -%}
+              <div class="widget-error">Unknown widget type: {{ w.type }}</div>
+          {%- endcase -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </section>
+  {%- endfor -%}
+
+  <p class="dash-note">
+    Mock data shown.
+    Will be replaced by a Google Sheets export once that pipeline is wired up.
+  </p>
+</article>
+
+{%- comment -%}
+  Bundle log + widget config into the page as JSON. The dashboard JS
+  reads these instead of refetching anything.
+{%- endcomment -%}
+<script id="health-log" type="application/json">{{ log | jsonify }}</script>
+<script id="health-config" type="application/json">{{ cfg | jsonify }}</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+<script src="{{ '/assets/js/health-dashboard.js' | relative_url }}" defer></script>

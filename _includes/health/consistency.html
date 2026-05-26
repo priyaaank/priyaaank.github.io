@@ -1,0 +1,15 @@
+{%- comment -%}
+  Consistency heatmap — one cell per day in the range. JS paints cells
+  filled/empty based on a boolean metric.
+{%- endcomment -%}
+<div class="widget-head">
+  <span class="widget-title">{{ include.w.title }}</span>
+  <span class="widget-sub" data-consistency-sub></span>
+</div>
+<div class="consistency-grid" data-consistency-grid></div>
+<div class="consistency-legend">
+  <span class="cl-cell cl-empty"></span>
+  <span class="cl-label">missed</span>
+  <span class="cl-cell cl-filled"></span>
+  <span class="cl-label">done</span>
+</div>

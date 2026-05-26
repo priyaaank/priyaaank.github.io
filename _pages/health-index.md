@@ -1,7 +1,7 @@
 ---
 layout: section-index
 source: health
-title: Health
-subtitle: Daily activity, life data, and write-ups on the experiments behind them.
-permalink: /health/
+title: Notes
+subtitle: Write-ups on the experiments and what the numbers ended up showing.
+permalink: /health/notes/
 ---

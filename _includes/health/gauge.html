@@ -1,0 +1,21 @@
+{%- comment -%}
+  Gauge: latest value rendered as a horizontal progress bar vs target.
+{%- endcomment -%}
+<div class="widget-head">
+  <span class="widget-title">{{ include.w.title }}</span>
+  {%- if include.w.target -%}
+    <span class="widget-target">
+      goal {{ include.w.target }}{{ include.w.unit }}
+    </span>
+  {%- endif -%}
+</div>
+<div class="gauge-body">
+  <div class="gauge-value">
+    <span data-gauge-value>—</span>
+    <span class="gauge-unit">{{ include.w.unit }}</span>
+  </div>
+  <div class="gauge-track">
+    <div class="gauge-fill" data-gauge-fill style="width: 0%"></div>
+  </div>
+  <div class="gauge-pct" data-gauge-pct></div>
+</div>

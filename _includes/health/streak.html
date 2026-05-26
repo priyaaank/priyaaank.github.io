@@ -1,0 +1,16 @@
+{%- comment -%}
+  Streak widget: current run and best run for a boolean metric.
+{%- endcomment -%}
+<div class="widget-head">
+  <span class="widget-title">{{ include.w.title }}</span>
+</div>
+<div class="streak-body">
+  <div class="streak-current">
+    <div class="streak-num" data-streak-current>—</div>
+    <div class="streak-lbl">day streak</div>
+  </div>
+  <div class="streak-best">
+    <span data-streak-best>—</span>
+    <span class="streak-lbl">best</span>
+  </div>
+</div>

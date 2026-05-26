@@ -1,0 +1,15 @@
+{%- comment -%}
+  Category widget — distribution of a categorical metric (e.g. workout
+  type). The category labels and colors are declared in widgets.yml
+  under `values:` and rendered into the markup as JSON so the JS can
+  paint a stacked bar plus the legend.
+{%- endcomment -%}
+<div class="widget-head">
+  <span class="widget-title">{{ include.w.title }}</span>
+  <span class="widget-sub" data-category-sub></span>
+</div>
+<div class="category-bar" data-category-bar></div>
+<div class="category-legend" data-category-legend></div>
+<script type="application/json" data-category-values>
+  {{ include.w.values | jsonify }}
+</script>

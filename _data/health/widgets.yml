@@ -1,0 +1,303 @@
+# ============================================================
+# Health dashboard configuration (DSL)
+# ------------------------------------------------------------
+# This file defines the *shape* of the dashboard. The actual
+# day-by-day data lives in _data/health/log.yml (one row per
+# date). Each widget references a `metric` key from that log.
+#
+# Widget types:
+#   stat         single big number + delta vs previous period
+#   line         line chart over time (numeric metric)
+#   bar          weekly/grouped bar chart (numeric metric)
+#   consistency  done/not-done heatmap (boolean metric)
+#                 — set cadence: weekly to render one cell per week
+#   streak       current and best consecutive-day streak
+#   gauge        latest value vs target, % filled
+#   category     stacked-bar distribution of a categorical metric
+#                 — declare the categories under `values:`
+#
+# Common widget fields:
+#   type, title, metric, unit, decimals, target,
+#   cadence (daily | weekly), color (ink | amber | teal | rose | sage)
+# ============================================================
+
+# Default lookback for the dashboard (days). Switch in the UI.
+range_default: 90
+
+# Available range presets in the time-range switcher.
+range_presets:
+  - { label: "1W",  days: 7 }
+  - { label: "2W",  days: 14 }
+  - { label: "30D", days: 30 }
+  - { label: "90D", days: 90 }
+  - { label: "6M",  days: 180 }
+  - { label: "1Y",  days: 365 }
+  - { label: "All", days: 0 }   # 0 = no limit
+
+# ---------- Sections ----------
+sections:
+  - id: body
+    title: Body
+    description: Weight, sleep, and resting signals.
+    widgets:
+      - type:     stat
+        title:    Weight
+        metric:   weight
+        unit:     kg
+        decimals: 1
+        target:   75
+        color:    ink
+
+      - type:     line
+        title:    Body weight
+        metric:   weight
+        unit:     kg
+        decimals: 1
+        target:   75
+        cadence:  daily
+        color:    ink
+        span:     2
+
+      - type:     stat
+        title:    Resting HR
+        metric:   resting_hr
+        unit:     bpm
+        decimals: 0
+        color:    rose
+
+      - type:     stat
+        title:    Avg sleep
+        metric:   sleep_hours
+        unit:     hr
+        decimals: 1
+        target:   7.5
+        color:    teal
+
+      - type:     line
+        title:    Resting heart rate
+        metric:   resting_hr
+        unit:     bpm
+        decimals: 0
+        cadence:  daily
+        color:    rose
+        span:     2
+
+      - type:     line
+        title:    Sleep duration
+        metric:   sleep_hours
+        unit:     hr
+        decimals: 1
+        target:   7.5
+        cadence:  daily
+        color:    teal
+        span:     2
+
+      - type:     stat
+        title:    Avg energy
+        metric:   energy
+        unit:     /5
+        decimals: 1
+        target:   4
+        color:    amber
+
+      - type:     line
+        title:    Energy level
+        metric:   energy
+        decimals: 1
+        target:   4
+        cadence:  daily
+        color:    amber
+        span:     2
+
+  - id: activity
+    title: Activity
+    description: Daily movement, climbs, and loaded carries.
+    widgets:
+      - type:     stat
+        title:    Avg steps
+        metric:   steps
+        unit:     "/day"
+        decimals: 0
+        target:   8000
+        color:    amber
+
+      - type:     bar
+        title:    Steps per day
+        metric:   steps
+        unit:     steps
+        decimals: 0
+        target:   8000
+        cadence:  daily
+        color:    amber
+        span:     2
+
+      - type:     stat
+        title:    Avg active kcal
+        metric:   active_kcal
+        unit:     kcal
+        decimals: 0
+        color:    rose
+
+      - type:     line
+        title:    Active calories
+        metric:   active_kcal
+        unit:     kcal
+        decimals: 0
+        cadence:  daily
+        color:    rose
+        span:     2
+
+      - type:     stat
+        title:    Avg floors
+        metric:   floors
+        decimals: 0
+        color:    sage
+
+      - type:     bar
+        title:    Floors climbed
+        metric:   floors
+        decimals: 0
+        cadence:  daily
+        color:    sage
+        span:     2
+
+      - type:     bar
+        title:    Pack weight carried
+        metric:   pack_kg
+        unit:     kg
+        decimals: 1
+        cadence:  daily
+        color:    ink
+        span:     2
+
+      - type:     category
+        title:    Workout mix
+        metric:   workout_type
+        cadence:  daily
+        color:    amber
+        span:     2
+        values:
+          - { key: walk,     label: Walk,     color: "#4d6a3a" }
+          - { key: hike,     label: Hike,     color: "#b45309" }
+          - { key: strength, label: Strength, color: "#1d1d1f" }
+          - { key: run,      label: Run,      color: "#b91c1c" }
+          - { key: rest,     label: Rest,     color: "#c9c4b5" }
+
+  - id: nutrition
+    title: Nutrition
+    description: Macros and hydration.
+    widgets:
+      - type:     stat
+        title:    Avg protein
+        metric:   protein_g
+        unit:     g
+        decimals: 0
+        target:   140
+        color:    sage
+
+      - type:     line
+        title:    Protein intake
+        metric:   protein_g
+        unit:     g
+        decimals: 0
+        target:   140
+        cadence:  daily
+        color:    sage
+        span:     2
+
+      - type:     stat
+        title:    Avg fibre
+        metric:   fibre_g
+        unit:     g
+        decimals: 0
+        target:   30
+        color:    sage
+
+      - type:     line
+        title:    Fibre intake
+        metric:   fibre_g
+        unit:     g
+        decimals: 0
+        target:   30
+        cadence:  daily
+        color:    sage
+        span:     2
+
+      - type:     gauge
+        title:    Water today
+        metric:   water_l
+        unit:     L
+        decimals: 1
+        target:   3
+        color:    teal
+
+      - type:     line
+        title:    Water intake
+        metric:   water_l
+        unit:     L
+        decimals: 1
+        target:   3
+        cadence:  daily
+        color:    teal
+        span:     2
+
+  - id: weekly
+    title: Weekly check-in
+    description: Logged every Sunday — recovery, biggest sessions, and habit roll-ups.
+    widgets:
+      - type:     stat
+        title:    Avg recovery
+        metric:   recovery
+        unit:     /5
+        decimals: 1
+        target:   4
+        color:    teal
+
+      - type:     line
+        title:    Recovery score
+        metric:   recovery
+        decimals: 1
+        target:   4
+        cadence:  weekly
+        color:    teal
+        span:     3
+
+      - type:     bar
+        title:    Longest single session
+        metric:   longest_session_km
+        unit:     km
+        decimals: 1
+        cadence:  weekly
+        color:    amber
+        span:     2
+
+      - type:     bar
+        title:    Max elevation in a session
+        metric:   max_elevation_m
+        unit:     m
+        decimals: 0
+        cadence:  weekly
+        color:    sage
+        span:     2
+
+      - type:     consistency
+        title:    Physio session
+        metric:   physio_done
+        cadence:  weekly
+        color:    rose
+
+      - type:     consistency
+        title:    Protein target 5+ days
+        metric:   protein_5days
+        cadence:  weekly
+        color:    sage
+
+      - type:     streak
+        title:    Physio streak
+        metric:   physio_done
+        cadence:  weekly
+
+      - type:     streak
+        title:    Protein habit streak
+        metric:   protein_5days
+        cadence:  weekly

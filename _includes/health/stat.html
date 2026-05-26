@@ -1,0 +1,19 @@
+{%- comment -%}
+  Stat widget: big current value + delta vs previous period.
+  JS fills .stat-value, .stat-delta, .stat-target.
+{%- endcomment -%}
+<div class="widget-head">
+  <span class="widget-title">{{ include.w.title }}</span>
+  {%- if include.w.target -%}
+    <span class="widget-target" data-target-label>
+      target {{ include.w.target }}{{ include.w.unit }}
+    </span>
+  {%- endif -%}
+</div>
+<div class="stat-body">
+  <div class="stat-value" data-stat-value>—</div>
+  <div class="stat-meta">
+    <span class="stat-unit">{{ include.w.unit }}</span>
+    <span class="stat-delta" data-stat-delta></span>
+  </div>
+</div>

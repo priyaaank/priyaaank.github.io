@@ -1,0 +1,10 @@
+{%- comment -%}
+  Bar chart. Same structure as line — the JS chooses chart type.
+{%- endcomment -%}
+<div class="widget-head">
+  <span class="widget-title">{{ include.w.title }}</span>
+  <span class="widget-sub" data-bar-sub></span>
+</div>
+<div class="chart-wrap">
+  <canvas data-bar-canvas></canvas>
+</div>
