@@ -8,7 +8,7 @@ permalink: /about/
 I'm Priyank Gupta. I build software for a living and write about it when
 something feels worth saying. The day job is at Sahaj, where I work with
 teams on hard engineering problems. Outside of that I run
-[Roadtripp](https://roadtripp.in){:target="_blank" rel="noopener noreferrer"}, a side project I keep coming back to.
+[Roadtripp](https://roadtripp.in/?utm_source=priyaaank.com){:target="_blank" rel="noopener noreferrer"}, a side project I keep coming back to.
 
 I read more than I write, lift more than I run, and prefer long-form notes
 over hot takes. This site is where the long-form notes live.

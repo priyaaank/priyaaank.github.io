@@ -28,7 +28,35 @@ Problem statement [here](https://github.com/priyaaank/MarsRover/blob/master/READ
 
 Before we look at some code, let me outline how I think about the problem in terms of models. I feel, we would have a "Rover" that should have a sense of its "Coordinates" and "Direction". Coordinate and direction together would make for a "Location" if there is enough behavior that we derive out of location itself. However currently based on problem statement it doesn't seem like, we do. There are "Commands" that rover can understand. And finally rover must have been deployed on a "Plateau" as problem states. So that summary highlights a sequence of models that represent my domain. How are they connected is driven by their interaction and that translates into the behavior each of these model encompass.
 
-The objects I have identified in problem are as follows: [gist](https://gist.github.com/priyaaank/fcabe6575313774ac1d8).
+The objects I have identified in problem are as follows:
+
+```java
+public class Coordinates {
+
+    // An object that represent a x and y coordinate.
+    // It is immutable, to reflect that a position cannot
+    // be modified, only a new one can be obtained using
+    // one as reference. Additionally it exposes behavior
+    // to check if another coordinate is outside or within
+    // bounds from 0,0 to current coordinate.
+
+    public Coordinates(final int xCoordinate,
+                       final int yCoordinate) { }
+
+    public Coordinates newCoordinatesFor(final int xCoordinateStepValue,
+                                         final int yCoordinateStepValue) { }
+
+    public Coordinates newCoordinatesForStepSize(final int xCoordinateStepValue,
+                                                 final int yCoordinateStepValue) { }
+
+    public boolean hasWithinBounds(final Coordinates coordinates) { }
+
+    public boolean hasOutsideBounds(final Coordinates coordinates) { }
+
+}
+```
+
+*[Source gist](https://gist.github.com/priyaaank/fcabe6575313774ac1d8)*
 
 Having had that look at the identified objects, here are few things I find comforting about this instance of object design.
 

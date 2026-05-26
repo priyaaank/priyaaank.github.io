@@ -8,7 +8,7 @@ permalink: /
 
 By day, I'm a software engineer at **Sahaj**, working with teams on hard
 engineering problems. By night and most weekends, I run
-[Roadtripp](https://roadtripp.in){:target="_blank" rel="noopener noreferrer"} — a side project I keep coming back to.
+[Roadtripp](https://roadtripp.in/?utm_source=priyaaank.com){:target="_blank" rel="noopener noreferrer"} — a side project I keep coming back to.
 
 I read more than I write, lift more than I run, and prefer long-form notes
 over hot takes. This site is the long-form notebook where the better notes

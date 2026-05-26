@@ -1,7 +1,15 @@
 {
   "permissions": {
     "allow": [
-      "Bash(curl -sLv -A \"Mozilla/5.0 \\(Macintosh; Intel Mac OS X 10_15_7\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/120.0.0.0 Safari/537.36\" \"https://medium.com/inspiredbrilliance/psychology-of-learned-helplessness-to-tackle-issues-in-engineering-teams-d99b0c42f141\" -o /tmp/learned-helplessness.html --max-time 30)"
+      "Bash(curl -sLv -A \"Mozilla/5.0 \\(Macintosh; Intel Mac OS X 10_15_7\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/120.0.0.0 Safari/537.36\" \"https://medium.com/inspiredbrilliance/psychology-of-learned-helplessness-to-tackle-issues-in-engineering-teams-d99b0c42f141\" -o /tmp/learned-helplessness.html --max-time 30)",
+      "Bash(curl -sL \"https://gist.githubusercontent.com/priyaaank/fcabe6575313774ac1d8/raw\" -o /tmp/gist1-domain-objects.txt -w \"G1: HTTP %{http_code} | %{size_download}b\\\\n\" --max-time 20)",
+      "Bash(curl -sL \"https://gist.githubusercontent.com/priyaaank/bfae96a306afd3bc88fd/raw\" -o /tmp/gist2-rover-before.txt -w \"G2: HTTP %{http_code} | %{size_download}b\\\\n\" --max-time 20)",
+      "Bash(curl -sL \"https://gist.githubusercontent.com/priyaaank/1afc714ccde8a05b5230/raw\" -o /tmp/gist3-rover-after.txt -w \"G3: HTTP %{http_code} | %{size_download}b\\\\n\" --max-time 20)",
+      "Bash(curl -sL \"https://gist.githubusercontent.com/priyaaank/6e4c37b238d5d64c875a/raw\" -o /tmp/gist4-beverage-before.txt -w \"G4: HTTP %{http_code} | %{size_download}b\\\\n\" --max-time 20)",
+      "Bash(curl -sL \"https://gist.githubusercontent.com/priyaaank/d4a84b98879b68d67556/raw\" -o /tmp/gist5-beverage-after.txt -w \"G5: HTTP %{http_code} | %{size_download}b\\\\n\" --max-time 20)",
+      "Bash(curl -sL \"https://gist.githubusercontent.com/priyaaank/e57389b1c256a6ac0299/raw\" -o /tmp/gist6-rover-tests.txt -w \"G6: HTTP %{http_code} | %{size_download}b\\\\n\" --max-time 20)",
+      "Read(//tmp/**)",
+      "Read(//private/tmp/**)"
     ]
   }
 }

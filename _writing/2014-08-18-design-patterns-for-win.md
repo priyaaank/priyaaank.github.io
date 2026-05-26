@@ -22,17 +22,80 @@ In this post, I will explore few design patterns to relay the benefits they brin
 
 **Command Pattern to parse rover commands**
 
-A typical rover command's implementation can often look like: [gist](https://gist.github.com/priyaaank/bfae96a306afd3bc88fd).
+A typical rover command's implementation can often look like:
+
+```java
+public class Rover {
+
+    public void handleCommand(RoverCommand command) {
+        switch(command) {
+            case R:
+                //Do stuff to rotate right
+                break;
+            case L:
+                // Do stuff to rotate left
+                break;
+            case M:
+                // Do stuff to move
+                break;
+        }
+    }
+}
+```
+
+*[Source gist](https://gist.github.com/priyaaank/bfae96a306afd3bc88fd)*
 
 If you look closely above, the logic is concise to start with but it is using branching to distinguish flows. While in this specific instance refactoring further in order to simplify the logic is somewhat debatable, in large and complex systems code fragments like this tend to bind several flows and evolve into labyrinth of incomprehensible and unreadable code.
 
-A simple choice of Command Pattern can alleviate the issue here. In contrast the code can be refactored to as follows: [gist](https://gist.github.com/priyaaank/1afc714ccde8a05b5230).
+A simple choice of Command Pattern can alleviate the issue here. In contrast the code can be refactored to as follows:
+
+```java
+public interface ICommand {
+
+   public void execute();
+
+}
+```
+
+*[Source gist](https://gist.github.com/priyaaank/1afc714ccde8a05b5230)*
 
 As I mentioned already if you are not familiar with design patterns, at first glance the code above can seem like a refactoring that has created more components and files. However once you have experienced the benefits of design patterns in context of flexibility and extensibility first hand you will see the rationale of this refactoring.
 
-Additionally, another most popular pattern to handle conditional branching and switch cases is using polymorphism or "Strategy Pattern". Here is an example code before refactoring: [gist](https://gist.github.com/priyaaank/6e4c37b238d5d64c875a).
+Additionally, another most popular pattern to handle conditional branching and switch cases is using polymorphism or "Strategy Pattern". Here is an example code before refactoring:
 
-Lets create a strategy to create a beverage which has concrete classes that implement that strategy to prepare a beverage based on the type of strategy. When a beverage needs to be created, a concrete type of beverage strategy must be instantiated and injected into the prepare method. Resulting code creates a clear separation of concerns and isolates case specific steps that need to be executed to prepare a beverage. Look at the resulting structure below. You will notice that it also hints at using builder pattern apart from strategy to prepare a beverage: [gist](https://gist.github.com/priyaaank/d4a84b98879b68d67556).
+```java
+public class BeverageMaker {
+
+    public Beverage prepareBeverage(String beverageName) {
+        Beverage preparedBeverage = null;
+        if("Coffee".equals(beverageName)) {
+            //Uses builder pattern
+            preparedBeverage = new Beverage("Coffee").addCoffeePowderTbsp(2).addMilkCups(2).addSugarTbsp(1).prepare();
+        } else if ("Tea".equals(beverageName)) {
+            preparedBeverage = new Beverage("Tea").addTeaPowderTbsp(2).addMilkCups(2).addSugarTbsp(1).prepare();
+        } else if ("Black Tea".equals(beverageName)) {
+            preparedBeverage = new Beverage("Black Tea").addTeaPowderTbsp(2).prepare();
+        }
+
+        return preparedBeverage;
+    }
+}
+```
+
+*[Source gist](https://gist.github.com/priyaaank/6e4c37b238d5d64c875a)*
+
+Lets create a strategy to create a beverage which has concrete classes that implement that strategy to prepare a beverage based on the type of strategy. When a beverage needs to be created, a concrete type of beverage strategy must be instantiated and injected into the prepare method. Resulting code creates a clear separation of concerns and isolates case specific steps that need to be executed to prepare a beverage. Look at the resulting structure below. You will notice that it also hints at using builder pattern apart from strategy to prepare a beverage:
+
+```java
+public class BeverageMaker {
+    public Beverage prepareBeverage(IBeverageStrategy beverageStrategy) {
+        //Delegates to strategy
+        return beverageStrategy.prepare();
+    }
+}
+```
+
+*[Source gist](https://gist.github.com/priyaaank/d4a84b98879b68d67556)*
 
 Beyond singleton, factory and abstract factory patterns; some of the other popular design patterns that I have found immensely helpful more often than others, to solve common design problems while coding or brainstorming are as follows:
 

@@ -30,7 +30,52 @@ As part of the coding problem solution sent in by candidates, we rarely get to s
 
 I hope to substantiate the above concepts with some code that is part of Mars Rover problem. Take a look at the internal details of the [Rover class](https://github.com/priyaaank/MarsRover/blob/master/src/com/thoughtworks/rover/MarsRover.java) in solution. Once you understand the rover, pretend it doesn't exist. And lets write simple test structure to drive the creation of this behavior through tests.
 
-Here is a [gist](https://gist.github.com/priyaaank/e57389b1c256a6ac0299) of skeleton methods that tests the key behavior of the rover. If you would look closely, you will see that beyond the behavior that is tested, we do not want to know anything about the rover. So the internal workings of a rover can be encapsulated and hidden from the outer world.
+Here is a skeleton of methods that tests the key behavior of the rover. If you would look closely, you will see that beyond the behavior that is tested, we do not want to know anything about the rover. So the internal workings of a rover can be encapsulated and hidden from the outer world.
+
+```java
+public class MarsRoverTest {
+
+    @Test
+    public void canProvideCurrentLocationAsString() {
+        //Given
+        // a set of coordinates and plateau
+
+        //When
+        // we initialize the
+        // rover with coordinates and plateau
+
+        //then
+        // assert that current location
+        //is returned appropriately
+    }
+
+    @Test
+    public void canRotateLeft() { }
+
+    @Test
+    public void canRotateRight() { }
+
+    @Test
+    public void canMove() { }
+
+    @Test
+    public void canRunCommandToRotateRight() { }
+
+    @Test
+    public void canRunCommandToRotateLeft() { }
+
+    @Test
+    public void canRunCommandToMove() { }
+
+    @Test
+    public void canRunCommandWithMultipleInstructions() { }
+
+    @Test
+    public void wontDriveOffPlateau() { }
+}
+```
+
+*[Source gist](https://gist.github.com/priyaaank/e57389b1c256a6ac0299)*
 
 It is worth noting that for reference purpose while I have created a full class listing all methods to test behavior, in reality, we would approach each method's red (failing test) test and green (passing test) test cycle one by one. A more complete implementation of the [rover test](https://github.com/priyaaank/MarsRover/blob/master/test/MarsRoverTest.java) is here.
 
