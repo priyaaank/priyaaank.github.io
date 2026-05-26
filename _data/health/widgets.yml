@@ -2,8 +2,9 @@
 # Health dashboard configuration (DSL)
 # ------------------------------------------------------------
 # This file defines the *shape* of the dashboard. The actual
-# day-by-day data lives in _data/health/log.yml (one row per
-# date). Each widget references a `metric` key from that log.
+# day-by-day data is fetched at runtime from the published
+# Google Sheet at `source_url` (see below). Each widget
+# references a `metric` key that maps to a CSV column.
 #
 # Widget types:
 #   stat         single big number + delta vs previous period
@@ -21,8 +22,12 @@
 #   cadence (daily | weekly), color (ink | amber | teal | rose | sage)
 # ============================================================
 
+# Published Google Sheet (Daily tab) — `File → Share → Publish to web → CSV`.
+# Fetched client-side at page load.
+source_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR1KuBIXuMYaL-Jq05IE0-IqoVJLJ7bNEJg32x7ttuOXGo2vZI_knNw3mToozdIIWlfGyFu-zcW3hWm/pub?output=csv"
+
 # Default lookback for the dashboard (days). Switch in the UI.
-range_default: 90
+range_default: 30
 
 # Available range presets in the time-range switcher.
 range_presets:
@@ -40,6 +45,7 @@ sections:
     title: Body
     description: Weight, sleep, and resting signals.
     widgets:
+
       - type:     stat
         title:    Weight
         metric:   weight

@@ -11,7 +11,6 @@ layout: default
   Liquid, half in JS.
 {%- endcomment -%}
 {%- assign cfg = site.data.health.widgets -%}
-{%- assign log = site.data.health.log -%}
 
 <link rel="stylesheet" href="{{ '/assets/css/health.css' | relative_url }}">
 
@@ -79,16 +78,16 @@ layout: default
   {%- endfor -%}
 
   <p class="dash-note">
-    Mock data shown.
-    Will be replaced by a Google Sheets export once that pipeline is wired up.
+    Data sourced live from a published Google Sheet — edits appear here
+    a few minutes after I log them.
   </p>
 </article>
 
 {%- comment -%}
-  Bundle log + widget config into the page as JSON. The dashboard JS
-  reads these instead of refetching anything.
+  Widget config (range presets, sections, source_url) is bundled inline.
+  The daily log is fetched at runtime from `cfg.source_url` (a published
+  Google Sheet CSV).
 {%- endcomment -%}
-<script id="health-log" type="application/json">{{ log | jsonify }}</script>
 <script id="health-config" type="application/json">{{ cfg | jsonify }}</script>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>

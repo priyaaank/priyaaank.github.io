@@ -2,8 +2,8 @@
    Health dashboard — client-side renderer.
 
    Reads:
-     #health-log     JSON array of { date, ...metricKeys }
-     #health-config  JSON (range_default, range_presets, sections)
+     #health-config     JSON (range_default, range_presets, sections, source_url)
+     CONFIG.source_url  Published Google Sheet CSV, fetched at boot
 
    Then for each [data-widget] in the DOM, computes stats and paints
    the widget body. Re-runs on time-range change.
@@ -23,25 +23,65 @@
     catch (e) { console.error('Bad JSON in #' + id, e); return null; }
   }
 
-  const RAW_LOG    = readJSON('health-log') || [];
-  const CONFIG     = readJSON('health-config') || {};
+  const CONFIG = readJSON('health-config') || {};
 
-  // Normalize and sort log ascending by date. Each row keeps the
-  // original metric keys (string-typed booleans become real booleans).
-  const LOG = RAW_LOG
-    .map(row => {
-      const out = { date: row.date };
-      for (const k of Object.keys(row)) {
-        if (k === 'date') continue;
-        out[k] = row[k];
+  // Populated by loadLog() before any widget render runs. Renderers
+  // close over these names, so reassignment here is visible to them.
+  let LOG = [];
+  let LATEST = null;
+
+  // Simple CSV parser. Assumes no embedded commas or quotes — fine
+  // for the health schema (numbers, ISO dates, single-word enums,
+  // TRUE/FALSE). Revisit if free-text columns get added.
+  function parseCSV(text) {
+    const lines = text.replace(/^﻿/, '').trim().split(/\r?\n/);
+    if (lines.length < 2) return [];
+    const headers = lines[0].split(',').map(s => s.trim());
+    const rows = [];
+    for (let i = 1; i < lines.length; i++) {
+      if (!lines[i].trim()) continue;
+      const cells = lines[i].split(',');
+      const row = {};
+      for (let j = 0; j < headers.length; j++) {
+        const key = headers[j];
+        const raw = (cells[j] || '').trim();
+        if (raw === '') continue;
+        if (key === 'date') {
+          row[key] = raw;
+        } else if (raw === 'TRUE' || raw === 'true')  { row[key] = true;  }
+        else   if (raw === 'FALSE' || raw === 'false'){ row[key] = false; }
+        else {
+          const n = Number(raw);
+          row[key] = (raw !== '' && !Number.isNaN(n) && /^-?\d/.test(raw)) ? n : raw;
+        }
       }
-      return out;
-    })
-    .sort((a, b) => a.date < b.date ? -1 : 1);
+      if (row.date) rows.push(row);
+    }
+    return rows;
+  }
 
-  if (!LOG.length) return;
+  async function loadLog() {
+    if (!CONFIG.source_url) throw new Error('No source_url configured');
+    const res = await fetch(CONFIG.source_url, { credentials: 'omit' });
+    if (!res.ok) throw new Error('CSV fetch failed: ' + res.status);
+    return parseCSV(await res.text());
+  }
 
-  const LATEST = LOG[LOG.length - 1].date;
+  // Cache the last successful parse so subsequent visits paint instantly
+  // and only swap when the fresh fetch returns. Bump CACHE_KEY when the
+  // log schema changes.
+  const CACHE_KEY = 'health-log-cache-v1';
+  function readCache() {
+    try {
+      const raw = localStorage.getItem(CACHE_KEY);
+      const parsed = raw ? JSON.parse(raw) : null;
+      return Array.isArray(parsed) ? parsed : null;
+    } catch (e) { return null; }
+  }
+  function writeCache(rows) {
+    try { localStorage.setItem(CACHE_KEY, JSON.stringify(rows)); }
+    catch (e) { /* quota exceeded or storage disabled — just skip */ }
+  }
 
   const COLORS = {
     ink:   { line: '#1d1d1f', fill: 'rgba(29,29,31,0.08)',  target: '#8a8784' },
@@ -519,9 +559,42 @@
     return defaultRange;
   }
 
-  function boot() {
+  function applyLog(rows) {
+    LOG = rows.slice().sort((a, b) => a.date < b.date ? -1 : 1);
+    LATEST = LOG[LOG.length - 1].date;
+  }
+
+  // The active range may have been changed by the user while the fetch
+  // was in flight — read it back from the DOM rather than re-using the
+  // initial default.
+  function activeRange(fallback) {
+    const sw = document.querySelector('[data-range-switcher]');
+    const btn = sw && sw.querySelector('.range-btn.active');
+    return btn ? (parseInt(btn.dataset.range, 10) || 0) : fallback;
+  }
+
+  async function boot() {
     const initial = wireRangeSwitcher();
-    renderAll(initial);
+
+    // Paint from cache first so the dashboard isn't blank while the
+    // network fetch is in flight. We deliberately keep these stale
+    // values on screen until the fresh fetch returns — only then do
+    // we replace them.
+    const cached = readCache();
+    if (cached && cached.length) {
+      applyLog(cached);
+      renderAll(activeRange(initial));
+    }
+
+    try {
+      const raw = await loadLog();
+      if (!raw.length) { console.warn('Health log is empty'); return; }
+      applyLog(raw);
+      writeCache(LOG);
+      renderAll(activeRange(initial));
+    } catch (e) {
+      console.error('Failed to load health log', e);
+    }
   }
 
   // Chart.js is loaded with `defer`, so wait for both DOM and Chart to be ready.
