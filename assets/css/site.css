@@ -721,6 +721,122 @@ aside.timeline {
   line-height: 1.5;
 }
 
+/* ---------- Bookshelf (timeline of finished books) ---------- */
+.bookshelf .bs-year { margin: 36px 0 44px; }
+.bookshelf .bs-year-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+}
+.bookshelf .bs-year-head h2 {
+  font-family: var(--serif);
+  font-size: 1.9rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.bookshelf .bs-count {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.bookshelf .bs-list {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column;
+  gap: 22px;
+}
+.bookshelf .bs-item {
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  gap: 18px;
+  align-items: baseline;
+}
+.bookshelf .bs-date {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  white-space: nowrap;
+  padding-top: 4px;
+}
+.bookshelf .bs-line {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.bookshelf .bs-title {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  color: var(--ink);
+  font-weight: 500;
+  line-height: 1.3;
+}
+.bookshelf .bs-title a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s;
+}
+.bookshelf .bs-title a:hover { border-bottom-color: var(--ink-2); }
+.bookshelf .bs-rating {
+  color: #b45309;       /* amber */
+  letter-spacing: 1.5px;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+.bookshelf .bs-star-empty { color: var(--rule); }
+.bookshelf .bs-meta {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.bookshelf .bs-author { font-weight: 500; color: var(--ink-2); }
+.bookshelf .bs-tag { color: var(--muted); }
+.bookshelf .bs-sep { margin: 0 8px; opacity: 0.5; }
+.bookshelf .bs-note {
+  margin: 8px 0 0;
+  color: var(--ink-2);
+  line-height: 1.55;
+  font-size: 0.95rem;
+  max-width: 60ch;
+}
+.bookshelf .bs-empty,
+.bookshelf .bs-status {
+  color: var(--muted);
+  font-style: italic;
+  margin-top: 24px;
+}
+.bookshelf .bs-status[hidden] { display: none; }
+.bookshelf .bs-section-reading .bs-year-head h2 {
+  display: flex; align-items: center; gap: 12px;
+}
+.bookshelf .bs-pulse {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #b45309;          /* amber, matches the dashboard accent */
+  animation: bs-pulse 2s ease-in-out infinite;
+  display: inline-block;
+}
+@keyframes bs-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(180, 83, 9, 0.14); }
+  50%      { box-shadow: 0 0 0 7px rgba(180, 83, 9, 0); }
+}
+.bookshelf .bs-date-label {
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+  color: var(--muted);
+  margin-right: 2px;
+}
+.bookshelf .bs-date--empty { display: block; }
+/* "Did not finish" — slightly recede so it sits below the timeline
+   without competing visually with the year sections. */
+.bookshelf .bs-section-abandoned { opacity: 0.85; }
+.bookshelf .bs-section-abandoned .bs-year-head h2 { color: var(--ink-2); }
+.bookshelf .bs-section-abandoned .bs-title { color: var(--ink-2); }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1080px) {
   .app { grid-template-columns: 260px minmax(0, 1fr); }
@@ -756,4 +872,6 @@ aside.timeline {
   .hero h1 { font-size: 2.4rem; }
   .cards { grid-template-columns: 1fr; }
   aside.timeline { padding: 32px 24px 60px; }
+  .bookshelf .bs-item { grid-template-columns: 1fr; gap: 6px; }
+  .bookshelf .bs-date { padding-top: 0; }
 }

@@ -1,0 +1,21 @@
+# Published Google Sheet (Bookshelf tab) — `File → Share → Publish to web → CSV`.
+# Fetched client-side at page load and rendered by assets/js/bookshelf.js.
+#
+# Expected columns (snake_case):
+#   title, author, status, finished, started, rating, note, tags,
+#   goodreads_link
+#
+# Notes:
+#   - status: blank or `finished` for finished books, `reading` for in-progress,
+#     `abandoned` for did-not-finish.
+#   - finished: YYYY, YYYY-MM, or YYYY-MM-DD. Year is the only required part
+#     (it drives the year grouping). Month and day are both optional —
+#     less precise dates render with less detail in the date column.
+#   - started: same format options as `finished`; fully optional everywhere.
+#   - rating: integer 1–5 or blank.
+#   - tags: pipe-separated inside the cell, e.g. `sci-fi|craft`. Comma is
+#     reserved as the CSV column delimiter and may appear inside `note`.
+#   - goodreads_link: optional URL. When present, the book title becomes
+#     a clickable link to the Goodreads page (or any URL you put here).
+
+source_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR1KuBIXuMYaL-Jq05IE0-IqoVJLJ7bNEJg32x7ttuOXGo2vZI_knNw3mToozdIIWlfGyFu-zcW3hWm/pub?gid=506588311&single=true&output=csv"

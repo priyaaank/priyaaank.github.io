@@ -10,6 +10,8 @@ items:
     url:   /writing/
   - label: Health Data
     url:   /health/
+  - label: Bookshelf
+    url:   /bookshelf/
   - label: Travelouge
     url:   https://roadtripp.in/?utm_source=priyaaank.com
     external: true

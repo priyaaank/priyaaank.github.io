@@ -14,6 +14,7 @@ markdown or YAML file; templates only hold structure.
 | [_data/sections.yml](_data/sections.yml)       | The three homepage cards                   |
 | [_data/milestones.yml](_data/milestones.yml)   | Right-column timeline (years + events)     |
 | [_data/elsewhere.yml](_data/elsewhere.yml)     | Homepage contact pills                     |
+| [_data/bookshelf_config.yml](_data/bookshelf_config.yml) | Bookshelf source URL (published Google Sheet CSV — fetched at runtime by assets/js/bookshelf.js) |
 | [_data/socials.yml](_data/socials.yml)         | Sidebar bottom icons                       |
 | [_data/home.yml](_data/home.yml)               | Section headings, footer note, etc.        |
 | [_writing/](_writing/)          | Tech blog posts — one `.md` per article              |
@@ -27,9 +28,10 @@ markdown or YAML file; templates only hold structure.
 | [assets/css/site.css](assets/css/site.css)     | All styles (dual-tone, mobile-aware)  |
 | [_layouts/default.html](_layouts/default.html) | Sidebar + main wrapper                |
 | [_layouts/home.html](_layouts/home.html)       | Homepage (sidebar + main + timeline)  |
-| [_layouts/page.html](_layouts/page.html)       | Static pages like About               |
+| [_layouts/page.html](_layouts/page.html)       | Generic static page wrapper           |
 | [_layouts/post.html](_layouts/post.html)       | Individual blog post                  |
 | [_layouts/section-index.html](_layouts/section-index.html) | Generic collection listing |
+| [_layouts/bookshelf.html](_layouts/bookshelf.html) | Empty shell — assets/js/bookshelf.js fetches CSV and renders the year-grouped timeline |
 | [_includes/sidebar.html](_includes/sidebar.html) | Left vertical nav                   |
 | [_includes/timeline.html](_includes/timeline.html) | Right column milestone timeline   |
 | [_includes/icon.html](_includes/icon.html)     | All inline SVG icons, looked up by name |

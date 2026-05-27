@@ -22,6 +22,16 @@
   url:  /health/
   icon: activity
 
+- key:         bookshelf
+  title:       Bookshelf
+  badge:       Reading log
+  description: >
+    A timeline of books I've finished, with a short note when I have
+    one to leave — and the occasional rating.
+  cta:  Browse the shelf
+  url:  /bookshelf/
+  icon: book-open
+
 - key:         roadtripp
   title:       Roadtripp
   badge:       Side project ↗
