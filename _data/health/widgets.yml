@@ -291,8 +291,8 @@ sections:
         span:     2
 
       - type:     consistency
-        title:    Physio session
-        metric:   physio_done
+        title:    Workout consistency
+        metric:   workout_done_5days
         cadence:  weekly
         color:    rose
 
@@ -303,8 +303,8 @@ sections:
         color:    sage
 
       - type:     streak
-        title:    Physio streak
-        metric:   physio_done
+        title:    Workout streak
+        metric:   workout_done_5days
         cadence:  weekly
 
       - type:     streak
