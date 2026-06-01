@@ -206,11 +206,12 @@ sections:
         color:    amber
         span:     2
         values:
-          - { key: walk,     label: Walk,     color: "#4d6a3a" }
-          - { key: hike,     label: Hike,     color: "#b45309" }
-          - { key: strength, label: Strength, color: "#1d1d1f" }
-          - { key: run,      label: Run,      color: "#b91c1c" }
-          - { key: rest,     label: Rest,     color: "#c9c4b5" }
+          - { key: walk,          label: Walk,              color: "#4d6a3a" }
+          - { key: hike,          label: Hike,              color: "#b45309" }
+          - { key: workout,       label: Workout,           color: "#1d1d1f" }
+          - { key: run,           label: Run,               color: "#b91c1c" }
+          - { key: rest,          label: Rest,              color: "#c9c4b5" }
+          - { key: walk_workout,  label: Walk + Workout,    color: "#0f766e" }
 
   - id: nutrition
     title: Nutrition
