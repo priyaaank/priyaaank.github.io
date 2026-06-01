@@ -14,6 +14,10 @@ email:       priyaaank@gmail.com
 url:         "https://priyaaank.com"
 baseurl:     ""
 
+# Google Analytics (GA4). The tag only renders in the production build
+# (JEKYLL_ENV=production) so local dev traffic isn't tracked.
+google_analytics: G-XRS7913PRR
+
 # ---------- Collections ----------
 collections:
   writing:
