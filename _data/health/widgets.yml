@@ -51,17 +51,17 @@ sections:
     widgets:
       
       - type:     consistency
-        title:    Workout
+        title:    Daily Workout
         metric:   workout_daily
         cadence:  daily
-        color:    amber
+        color:    teal
         span:     2
       
       - type:     consistency
-        title:    Walking > 5kms
-        metric:   walk_daily_5kms
+        title:    Daily Walking
+        metric:   walk_daily
         cadence:  daily
-        color:    amber
+        color:    teal
         span:     2
 
   - id: body
@@ -274,25 +274,8 @@ sections:
     title: Weekly check-in
     description: Logged every Sunday — recovery, biggest sessions, and habit roll-ups.
     widgets:
-      - type:     stat
-        title:    Avg recovery
-        metric:   recovery
-        unit:     /5
-        decimals: 1
-        target:   4
-        color:    teal
-
-      - type:     line
-        title:    Recovery score
-        metric:   recovery
-        decimals: 1
-        target:   4
-        cadence:  weekly
-        color:    teal
-        span:     3
-
       - type:     bar
-        title:    Longest single session
+        title:    Longest distance in session
         metric:   longest_session_km
         unit:     km
         decimals: 1
@@ -309,18 +292,6 @@ sections:
         color:    sage
         span:     2
 
-      - type:     consistency
-        title:    Workout consistency
-        metric:   workout_done_5days
-        cadence:  weekly
-        color:    rose
-
-      - type:     consistency
-        title:    Protein target 5+ days
-        metric:   protein_5days
-        cadence:  weekly
-        color:    sage
-
       - type:     streak
         title:    Workout streak
         metric:   workout_done_5days
@@ -330,3 +301,17 @@ sections:
         title:    Protein habit streak
         metric:   protein_5days
         cadence:  weekly
+
+      - type:     consistency
+        title:    Workout consistency
+        metric:   workout_done_5days
+        cadence:  weekly
+        color:    rose
+
+      - type:     consistency
+        title:    Protein 5+ days
+        metric:   protein_5days
+        cadence:  weekly
+        color:    sage
+
+ 
