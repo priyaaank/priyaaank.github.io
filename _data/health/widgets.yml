@@ -45,6 +45,25 @@ range_presets:
 
 # ---------- Sections ----------
 sections:
+  - id: rituals
+    title: Rituals
+    description: Consistent rituals for long term habits
+    widgets:
+      
+      - type:     consistency
+        title:    Workout
+        metric:   workout_daily
+        cadence:  daily
+        color:    amber
+        span:     2
+      
+      - type:     consistency
+        title:    Walking > 5kms
+        metric:   walk_daily_5kms
+        cadence:  daily
+        color:    amber
+        span:     2
+
   - id: body
     title: Body
     description: Weight, sleep, and resting signals.
