@@ -133,8 +133,12 @@
   // Filtering and stats
   // ------------------------------------------------------------
   function daysAgo(n) {
-    const d = new Date(LATEST + 'T00:00:00');
-    d.setDate(d.getDate() - n);
+    // All date math is done in UTC so the computed key matches the plain
+    // ISO `date` strings in the log regardless of the viewer's timezone.
+    // (Parsing without 'Z' would anchor to local midnight, and a later
+    // toISOString() would then shift the date by a day in offsets like IST.)
+    const d = new Date(LATEST + 'T00:00:00Z');
+    d.setUTCDate(d.getUTCDate() - n);
     return d.toISOString().slice(0, 10);
   }
 
@@ -348,11 +352,13 @@
     }
     cellCount = Math.min(cellCount, cadence === 'weekly' ? 52 : 140);
 
-    const endDate = new Date(LATEST + 'T00:00:00');
+    // Walk the calendar in UTC (see daysAgo) so cell→date keys line up
+    // with the log's ISO dates in every timezone, not just UTC browsers.
+    const endDate = new Date(LATEST + 'T00:00:00Z');
     const cells = [];
     for (let i = cellCount - 1; i >= 0; i--) {
       const d = new Date(endDate);
-      d.setDate(d.getDate() - i * stepDays);
+      d.setUTCDate(d.getUTCDate() - i * stepDays);
       const key = d.toISOString().slice(0, 10);
       const v = byDate.get(key);
       let cls = 'no-data';
