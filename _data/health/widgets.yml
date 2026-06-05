@@ -61,8 +61,15 @@ sections:
         title:    Daily Walking
         metric:   walk_daily
         cadence:  daily
-        color:    teal
-        span:     2
+        color:    ink
+        span:     1
+
+      - type:     consistency
+        title:    Diet Control
+        metric:   diet_control
+        cadence:  daily
+        color:    rose
+        span:     1
 
   - id: body
     title: Body
