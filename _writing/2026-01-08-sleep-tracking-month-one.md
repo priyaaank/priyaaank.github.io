@@ -2,7 +2,7 @@
 title: "Iteration Four - Fundamentals & Habits"
 date: 2026-06-06
 slug: sleep-tracking-month-one
-tags: [fitness, tracking]
+tags: [health, fitness, tracking]
 excerpt_short: Setting up a system to track fitness and health fundamentals. Building in Public, One Habit at a Time
 ---
 

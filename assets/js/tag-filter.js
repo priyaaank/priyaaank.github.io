@@ -70,4 +70,10 @@
       });
     }
   );
+
+  // Pre-apply a tag from the URL (e.g. /writing/?tag=health) so other
+  // pages can deep-link into a filtered view.
+  var params = new URLSearchParams(window.location.search);
+  var initialTag = params.get('tag');
+  if (initialTag) setActiveTag(initialTag);
 })();
