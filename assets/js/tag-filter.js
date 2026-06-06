@@ -35,6 +35,19 @@
     if (emptyMsg) emptyMsg.hidden = visible > 0;
   }
 
+  function syncUrl() {
+    if (!window.history || !window.history.replaceState) return;
+    var params = new URLSearchParams(window.location.search);
+    if (activeTag) {
+      params.set('tag', activeTag);
+    } else {
+      params.delete('tag');
+    }
+    var qs = params.toString();
+    window.history.replaceState(null, '',
+      window.location.pathname + (qs ? '?' + qs : '') + window.location.hash);
+  }
+
   function setActiveTag(tag, opts) {
     opts = opts || {};
     // Chip clicks toggle; per-post tag clicks always set.
@@ -46,6 +59,7 @@
     chips.forEach(function (c) {
       c.classList.toggle('active', c.getAttribute('data-tag') === activeTag);
     });
+    if (!opts.silent) syncUrl();
     apply();
   }
 
@@ -75,5 +89,5 @@
   // pages can deep-link into a filtered view.
   var params = new URLSearchParams(window.location.search);
   var initialTag = params.get('tag');
-  if (initialTag) setActiveTag(initialTag);
+  if (initialTag) setActiveTag(initialTag, { silent: true });
 })();
