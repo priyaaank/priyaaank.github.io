@@ -50,7 +50,7 @@ title: "Some title"
 date: 2026-05-26
 slug: some-title
 tags: [tech, architecture]          # any strings; first one usually a category
-excerpt_short: One-line teaser shown on the index page.
+description: One-line teaser shown on the index page and used as the SEO meta description.
 ---
 
 Body in markdown.

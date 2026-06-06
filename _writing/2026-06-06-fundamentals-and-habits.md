@@ -1,9 +1,9 @@
 ---
 title: "Iteration Four - Fundamentals & Habits"
 date: 2026-06-06
-slug: sleep-tracking-month-one
+slug: fundamentals-and-habits
 tags: [health, fitness, tracking]
-excerpt_short: Setting up a system to track fitness and health fundamentals. Building in Public, One Habit at a Time
+description: Setting up a system to track fitness and health fundamentals. Building in Public, One Habit at a Time
 ---
 
 *I'll be straight with myself*: I'm impulsive. 

@@ -3,7 +3,7 @@ title: "Objects that are loose and discrete"
 date: 2014-08-18
 slug: objects-that-are-loose-and-discrete
 tags: [tech, oop]
-excerpt_short: State vs behavior, Tell-Don't-Ask, unidirectional associations, Law of Demeter, and dependency injection — guidelines that keep object models loosely coupled.
+description: State vs behavior, Tell-Don't-Ask, unidirectional associations, Law of Demeter, and dependency injection — guidelines that keep object models loosely coupled.
 ---
 
 This is my third blog in the series of "Decoding ThoughtWorks' coding problems". If you haven't checked out the first two blogs, please read my blog on [Decoding ThoughtWorks coding problems](/writing/decoding-thoughtworks-coding-problems/) and [Objects that talk domain](/writing/objects-that-talk-domain/).

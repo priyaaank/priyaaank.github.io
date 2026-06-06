@@ -3,7 +3,7 @@ title: "Decoding ThoughtWorks' coding problems"
 date: 2014-08-18
 slug: decoding-thoughtworks-coding-problems
 tags: [tech, oop]
-excerpt_short: An intro to a series on what "good code" means in the context of ThoughtWorks' interview code reviews, using the Mars Rover problem.
+description: An intro to a series on what "good code" means in the context of ThoughtWorks' interview code reviews, using the Mars Rover problem.
 ---
 
 I think it is only apt that I introduce myself before I kick start an in-depth post about Object Oriented design of coding problems that we send out in Thoughtworks' interview process.

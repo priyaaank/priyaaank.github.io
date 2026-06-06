@@ -3,7 +3,7 @@ title: "Validating SSL certs in Mobile Apps"
 date: 2014-03-30
 slug: validating-ssl-certs-mobile
 tags: [tech, mobiledev]
-excerpt_short: Preventing Man in the middle attacks with certification .
+description: Preventing Man in the middle attacks with certification .
 ---
 
 Music is blaring, everyone around seems to be grooving to beats and you are having a good time. But is this the actual party you intended to attend? Similar question should be asked, when your mobile app is talking to a server api; even on HTTPS. 

@@ -3,7 +3,7 @@ title: "Building Adaptive Mobile APIs with Legacy Services"
 date: 2014-11-17
 slug: building-adaptive-mobile-apis-legacy-services
 tags: [tech, apis, architecture]
-excerpt_short: An adaptive proxy layer between mobile apps and legacy backends to decouple release cadence, trim payloads, and aggregate sources.
+description: An adaptive proxy layer between mobile apps and legacy backends to decouple release cadence, trim payloads, and aggregate sources.
 ---
 
 Mobile is rapidly taking over desktop as a channel to reach customers. In fact, according to Mary Meekers' 2014 Internet trends, Internet traffic from mobile devices is up from 14% in May 2013 to 25% globally in May 2014. That's significant year-on-year growth. Businesses all around the globe are adapting to include a compelling mobile experience for customers as part of their digital strategy.

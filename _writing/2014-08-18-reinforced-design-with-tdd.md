@@ -3,7 +3,7 @@ title: "Reinforced design with TDD"
 date: 2014-08-18
 slug: reinforced-design-with-tdd
 tags: [tech, oop]
-excerpt_short: How TDD reinforces good object design — breaking problems into small units, forcing behavior-first thinking, and building a safety net for refactoring.
+description: How TDD reinforces good object design — breaking problems into small units, forcing behavior-first thinking, and building a safety net for refactoring.
 ---
 
 This is my fifth blog in the series of "Decoding ThoughtWorks' coding problems". If you haven't checked out the first four blogs, please read my blogs on [Decoding ThoughtWorks coding problems](/writing/decoding-thoughtworks-coding-problems/), [Objects that talk domain](/writing/objects-that-talk-domain/), [Objects that are loose and discrete](/writing/objects-that-are-loose-and-discrete/) and [Design patterns for win](/writing/design-patterns-for-win/).

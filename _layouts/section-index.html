@@ -53,12 +53,12 @@ layout: default
     {%- for post in posts -%}
       <li
         data-tags="{{ post.tags | join: ',' | downcase }}"
-        data-search="{{ post.title | append: ' ' | append: post.excerpt_short | append: ' ' | append: post.tags | join: ' ' | downcase | escape }}"
+        data-search="{{ post.title | append: ' ' | append: post.description | append: ' ' | append: post.tags | join: ' ' | downcase | escape }}"
       >
         <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
         <span class="meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-        {%- if post.excerpt_short %}
-          <p class="excerpt">{{ post.excerpt_short }}</p>
+        {%- if post.description %}
+          <p class="excerpt">{{ post.description }}</p>
         {%- endif -%}
         {%- if post.tags and post.tags.size > 0 %}
           <div class="tags">

@@ -3,7 +3,7 @@ title: "Design patterns for win"
 date: 2014-08-18
 slug: design-patterns-for-win
 tags: [tech, oop]
-excerpt_short: Why design patterns are worth learning — illustrated with Command and Strategy refactorings on the Mars Rover problem.
+description: Why design patterns are worth learning — illustrated with Command and Strategy refactorings on the Mars Rover problem.
 ---
 
 If you are not familiar with design pattern, then I would explain design pattern as "a tried and tested pattern or template to organize your object design, given a set of constraints and requirements around object interaction. In other words, they are dictionary of formalized best object design practices to handle common issues of object interactions".

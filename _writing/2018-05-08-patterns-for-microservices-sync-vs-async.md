@@ -3,7 +3,7 @@ title: "Patterns for microservices - Sync vs Async"
 date: 2018-05-08
 slug: patterns-for-microservices-sync-vs-async
 tags: [tech, microservices, architecture]
-excerpt_short: Trade-offs between synchronous and asynchronous communication styles in a microservices architecture.
+description: Trade-offs between synchronous and asynchronous communication styles in a microservices architecture.
 ---
 
 Microservices is an architecture paradigm. In this architectural style, small and independent components work together as a system. Despite its higher operational complexity, the paradigm has seen a rapid adoption. It is because it helps break down a complex system into manageable services. The services embrace micro-level concerns like single responsibility, separation of concerns, modularity, etc.

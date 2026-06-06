@@ -38,12 +38,16 @@ defaults:
     values:
       layout:  post
       section: writing
+      seo:
+        type: BlogPosting
   - scope:
       path: ""
       type: health
     values:
       layout:  post
       section: health
+      seo:
+        type: BlogPosting
   - scope:
       path: ""
       type: pages

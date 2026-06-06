@@ -3,7 +3,7 @@ title: "Objects that talk domain"
 date: 2014-08-18
 slug: objects-that-talk-domain
 tags: [tech, oop]
-excerpt_short: Why models should own behavior tied to the domain — and what's wrong with the data-transfer-object reflex many enterprise developers carry over.
+description: Why models should own behavior tied to the domain — and what's wrong with the data-transfer-object reflex many enterprise developers carry over.
 ---
 
 This is my second blog in the series of "Decoding ThoughtWorks' coding problems". If you haven't checked out the first blog, please read my blog on [Decoding ThoughtWorks coding problems](/writing/decoding-thoughtworks-coding-problems/).

@@ -3,7 +3,7 @@ title: "How I learned to love personal development"
 date: 2014-11-17
 slug: how-i-learned-to-love-personal-development
 tags: [growth]
-excerpt_short: Finding structure in personal development so it doesn't get crowded out by delivery and deadlines.
+description: Finding structure in personal development so it doesn't get crowded out by delivery and deadlines.
 ---
 
 ![Tracking growth](/assets/images/personal-development/tracking-growth.png)

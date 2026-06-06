@@ -3,7 +3,7 @@ title: "Psychology of learned helplessness to tackle issues in engineering teams
 date: 2022-06-01
 slug: psychology-of-learned-helplessness-in-engineering-teams
 tags: [culture, teams]
-excerpt_short: Tech debt is rarely a tooling problem — it's often learned helplessness, and external intervention plus small repeated actions is how teams break the cycle.
+description: Tech debt is rarely a tooling problem — it's often learned helplessness, and external intervention plus small repeated actions is how teams break the cycle.
 ---
 
 It is common for teams to struggle with tech debt. It is a raging topic at many tech conferences. Every time it is discussed, folks responsible for the success of their teams listen with rapt attention. They take back the learned ideas to their teams, attempt with renewed vigor, fail, and then go to other avenues, looking for the elusive elixir. The cycle is almost self-perpetuating.

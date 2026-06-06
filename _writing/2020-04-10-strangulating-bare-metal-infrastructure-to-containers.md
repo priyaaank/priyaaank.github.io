@@ -3,7 +3,7 @@ title: "Strangulating bare-metal infrastructure to Containers"
 date: 2020-04-10
 slug: strangulating-bare-metal-infrastructure-to-containers
 tags: [tech, infrastructure]
-excerpt_short: An incremental strangler-pattern migration from bare-metal Ansible deployments to Kubernetes with under a few minutes of production disruption.
+description: An incremental strangler-pattern migration from bare-metal Ansible deployments to Kubernetes with under a few minutes of production disruption.
 ---
 
 > Change is inevitable. Change for the better is a full-time job ~ Adlai Stevenson I
