@@ -55,7 +55,7 @@ sections:
         metric:   workout_daily
         cadence:  daily
         color:    teal
-        span:     2
+        span:     1
       
       - type:     consistency
         title:    Daily Walking
@@ -69,6 +69,13 @@ sections:
         metric:   diet_control
         cadence:  daily
         color:    rose
+        span:     1
+      
+      - type:     consistency
+        title:    Cold Water Bath
+        metric:   cold_water_bath
+        cadence:  daily
+        color:    amber
         span:     1
 
   - id: body
@@ -214,10 +221,10 @@ sections:
         span:     2
         values:
           - { key: walk,          label: Walk,              color: "#4d6a3a" }
-          - { key: hike,          label: Hike,              color: "#0f766e" }
+          - { key: hike,          label: Hike,              color: "#c9c4b5" }
           - { key: workout,       label: Workout,           color: "#1d1d1f" }
           - { key: run,           label: Run,               color: "#b91c1c" }
-          - { key: rest,          label: Rest,              color: "#c9c4b5" }
+          - { key: rest,          label: Rest,              color: "#0f766e" }
           - { key: walk_workout,  label: Walk + Workout,    color: "#b45309" }
 
   - id: nutrition
