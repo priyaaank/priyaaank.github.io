@@ -396,6 +396,34 @@
       cellEls.push(cell);
     }
 
+    // Auto-fit: shrink cells so the whole range fits the widget width at any
+    // range, instead of running off the edge. CSS defines a comfortable cell
+    // size; we only ever shrink below it here, never grow past it. The gap
+    // scales down with the cell so small grids aren't mostly gap.
+    const GAP_MAX  = cadence === 'weekly' ? 4  : 3;   // mirrors health.css
+    const CELL_MAX = cadence === 'weekly' ? 20 : 14;
+    const CELL_MIN = 4;
+    const cols  = cadence === 'weekly' ? cellCount : Math.ceil(cellCount / 7);
+    const avail = grid.clientWidth ||
+                  (grid.parentElement && grid.parentElement.clientWidth) || 0;
+    if (avail > 0 && cols > 0) {
+      let cell = Math.floor((avail - (cols - 1) * GAP_MAX) / cols);
+      cell = Math.max(CELL_MIN, Math.min(CELL_MAX, cell));
+      let gap = cell >= 10 ? GAP_MAX : Math.max(1, Math.round(cell * 0.2));
+      // Guarantee fit at any width: first collapse the gap toward 0, then —
+      // only if cells alone still overflow (very narrow widget, full year) —
+      // shrink the cell below its nominal minimum rather than spill over.
+      const span = (c, g) => cols * c + (cols - 1) * g;
+      if (cols > 1 && span(cell, gap) > avail) {
+        gap = Math.max(0, Math.floor((avail - cols * cell) / (cols - 1)));
+        if (span(cell, gap) > avail) {
+          cell = Math.max(1, Math.floor((avail - (cols - 1) * gap) / cols));
+        }
+      }
+      grid.style.setProperty('--ccell', cell + 'px');
+      grid.style.gap = gap + 'px';
+    }
+
     const sub = el.querySelector('[data-consistency-sub]');
     const label = cadence === 'weekly' ? 'weeks' : 'days';
     const summary = total
@@ -653,6 +681,15 @@
     } catch (e) {
       console.error('Failed to load health log', e);
     }
+
+    // Consistency grids size their cells to the current widget width, so a
+    // resize would leave them stale. Re-render (debounced) to refit. Charts
+    // self-resize, so re-running them here is harmless.
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => renderAll(activeRange(initial)), 150);
+    });
   }
 
   // Chart.js is loaded with `defer`, so wait for both DOM and Chart to be ready.
