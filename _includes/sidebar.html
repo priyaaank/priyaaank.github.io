@@ -30,20 +30,17 @@
   </div>
 
   <div class="sidebar-foot">
-    {%- if profile.resume.url -%}
-    <a href="{{ profile.resume.url | relative_url }}" class="resume-btn">
-      {% include icon.html name="download" %}
-      {{ profile.resume.label }}
-      <span class="arrow">→</span>
-    </a>
-    {%- endif -%}
-
     <div class="socials">
       {%- for s in site.data.socials -%}
         <a href="{{ s.url }}" title="{{ s.label }}" aria-label="{{ s.label }}">
           {% include icon.html name=s.icon %}
         </a>
       {%- endfor -%}
+      {%- if profile.resume.url -%}
+        <a href="{{ profile.resume.url | relative_url }}" title="{{ profile.resume.label }}" aria-label="{{ profile.resume.label }}">
+          {% include icon.html name="download" %}
+        </a>
+      {%- endif -%}
     </div>
   </div>
 </aside>

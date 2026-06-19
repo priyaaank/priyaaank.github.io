@@ -354,7 +354,22 @@
 
     // Walk the calendar in UTC (see daysAgo) so cell→date keys line up
     // with the log's ISO dates in every timezone, not just UTC browsers.
-    const endDate = new Date(LATEST + 'T00:00:00Z');
+    //
+    // Daily grids anchor to LATEST. Weekly grids must anchor to the most
+    // recent date that actually carries this metric (the weekly check-in,
+    // logged on Sundays) — otherwise stepping back 7 days from LATEST only
+    // lands on a check-in date when LATEST itself happens to be that
+    // weekday, and every cell reads "no data".
+    let anchor = LATEST;
+    if (cadence === 'weekly') {
+      for (let i = LOG.length - 1; i >= 0; i--) {
+        if (LOG[i][metric] !== undefined && LOG[i][metric] !== null) {
+          anchor = LOG[i].date;
+          break;
+        }
+      }
+    }
+    const endDate = new Date(anchor + 'T00:00:00Z');
     const cells = [];
     for (let i = cellCount - 1; i >= 0; i--) {
       const d = new Date(endDate);
