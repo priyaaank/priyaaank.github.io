@@ -221,11 +221,12 @@ sections:
         span:     2
         values:
           - { key: walk,          label: Walk,              color: "#4d6a3a" }
+          - { key: run,           label: Run,               color: "#b91c1c" }
           - { key: hike,          label: Hike,              color: "#c9c4b5" }
           - { key: workout,       label: Workout,           color: "#1d1d1f" }
-          - { key: run,           label: Run,               color: "#b91c1c" }
           - { key: rest,          label: Rest,              color: "#0f766e" }
           - { key: walk_workout,  label: Walk + Workout,    color: "#b45309" }
+          - { key: run_workout,   label: Run + Workout,     color: "#7c3aed" }
 
   - id: nutrition
     title: Nutrition
