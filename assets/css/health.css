@@ -423,6 +423,78 @@ article.health-dashboard { max-width: none; }
   font-weight: 500;
 }
 
+/* ---------- records (Hall of Fame) ---------- */
+.widget--records { min-height: 160px; }
+.records-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 12px;
+  margin-top: 4px;
+}
+.records-empty {
+  color: var(--h-muted);
+  font-style: italic;
+  font-size: 0.85rem;
+  padding: 8px 0;
+}
+.record-card {
+  position: relative;
+  background: var(--h-card-soft);
+  border: 1px solid var(--h-rule);
+  border-radius: 10px;
+  padding: 14px 16px 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow: hidden;
+}
+.record-card::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--h-ink);
+}
+.record-card.color-amber::before { background: var(--h-amber); }
+.record-card.color-teal::before  { background: var(--h-teal); }
+.record-card.color-rose::before  { background: var(--h-rose); }
+.record-card.color-sage::before  { background: var(--h-sage); }
+
+.record-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--h-ink-2);
+}
+.record-value {
+  font-family: var(--serif);
+  font-size: 1.9rem;
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--h-ink);
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.record-unit {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--h-muted);
+}
+.record-meta {
+  font-size: 0.74rem;
+  color: var(--h-muted);
+  letter-spacing: 0.02em;
+}
+
+/* ---------- monthly rollup (reuses chart-wrap) ---------- */
+.widget--monthly { min-height: 200px; }
+.widget--monthly.span-2 { min-height: 220px; }
+
 /* ---------- footer note ---------- */
 .dash-note {
   margin-top: 32px;

@@ -58,6 +58,7 @@ layout: default
              data-unit="{{ w.unit | default: '' }}"
              data-decimals="{{ w.decimals | default: 1 }}"
              data-target="{{ w.target }}"
+             data-agg="{{ w.agg | default: 'sum' }}"
              data-cadence="{{ w.cadence | default: 'daily' }}"
              data-color="{{ w.color | default: 'ink' }}">
           {%- case w.type -%}
@@ -68,6 +69,8 @@ layout: default
             {%- when 'streak'      -%}{% include health/streak.html      w=w %}
             {%- when 'gauge'       -%}{% include health/gauge.html       w=w %}
             {%- when 'category'    -%}{% include health/category.html    w=w %}
+            {%- when 'records'     -%}{% include health/records.html     w=w %}
+            {%- when 'monthly'     -%}{% include health/monthly.html     w=w %}
             {%- else -%}
               <div class="widget-error">Unknown widget type: {{ w.type }}</div>
           {%- endcase -%}

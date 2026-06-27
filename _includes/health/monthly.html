@@ -1,0 +1,11 @@
+{%- comment -%}
+  Monthly rollup: one bar per calendar month. Same shell as bar — the
+  JS buckets the daily log by month and aggregates per `data-agg`.
+{%- endcomment -%}
+<div class="widget-head">
+  <span class="widget-title">{{ include.w.title }}</span>
+  <span class="widget-sub" data-monthly-sub></span>
+</div>
+<div class="chart-wrap">
+  <canvas data-monthly-canvas></canvas>
+</div>

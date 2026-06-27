@@ -16,6 +16,14 @@
 #   gauge        latest value vs target, % filled
 #   category     stacked-bar distribution of a categorical metric
 #                 — declare the categories under `values:`
+#   records      Hall of Fame board — personal bests read from a
+#                 *separate* CSV (`records_source_url`), one card per
+#                 row. Open-ended: add a row to the sheet, a card
+#                 appears. Computes nothing — values are pre-recorded.
+#   monthly      calendar-month rollup of a daily metric, as a bar
+#                 chart (one bar per month). `agg:` decides how days
+#                 combine: sum (additive: steps, kcal) | mean | max | min.
+#                 Ignores the range switcher — always all months.
 #
 # Common widget fields:
 #   type, title, metric, unit, decimals, target,
@@ -29,6 +37,18 @@ source_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR1KuBIXuMYaL-Jq05I
 # Optional second CSV (Weekly tab) — same publish-to-web flow, different
 # `gid`. Fetched in parallel and merged into the daily log by date.
 weekly_source_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR1KuBIXuMYaL-Jq05IE0-IqoVJLJ7bNEJg32x7ttuOXGo2vZI_knNw3mToozdIIWlfGyFu-zcW3hWm/pub?gid=301882595&single=true&output=csv"
+
+# Optional Hall of Fame CSV (Records tab) — same publish-to-web flow, its own
+# `gid`. NOT merged into the daily log; fetched in parallel and rendered by the
+# `records` board widget. One row per personal best. Expected columns:
+#   label   — record name           (e.g. "Longest Run")
+#   value   — the number            (e.g. 21.1)
+#   unit    — display unit, optional (e.g. "km")
+#   date    — ISO date it happened,  optional (e.g. 2026-03-14)
+#   detail  — short note,            optional (e.g. "Sunday half marathon")
+#   color   — ink|amber|teal|rose|sage, optional (defaults to ink)
+# Leave commented out until the tab is published.
+records_source_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR1KuBIXuMYaL-Jq05IE0-IqoVJLJ7bNEJg32x7ttuOXGo2vZI_knNw3mToozdIIWlfGyFu-zcW3hWm/pub?gid=1001279541&single=true&output=csv"
 
 # Default lookback for the dashboard (days). Switch in the UI.
 range_default: 30
@@ -45,6 +65,14 @@ range_presets:
 
 # ---------- Sections ----------
 sections:
+  - id: hall-of-fame
+    title: Hall of Fame
+    description: Personal bests, all-time — read straight from the Records sheet.
+    widgets:
+      - type:     records
+        title:    All-time bests
+        span:     4
+
   - id: rituals
     title: Rituals
     description: Consistent rituals for long term habits
@@ -330,4 +358,42 @@ sections:
         cadence:  weekly
         color:    sage
 
- 
+  - id: monthly
+    title: Monthly totals
+    description: Cumulative effort, month by month. Additive metrics are summed; the rest averaged.
+    widgets:
+      - type:     monthly
+        title:    Steps per month
+        metric:   steps
+        agg:      sum
+        unit:     steps
+        decimals: 0
+        color:    amber
+        span:     2
+
+      - type:     monthly
+        title:    Active calories per month
+        metric:   active_kcal
+        agg:      sum
+        unit:     kcal
+        decimals: 0
+        color:    rose
+        span:     2
+
+      - type:     monthly
+        title:    Floors climbed per month
+        metric:   floors
+        agg:      sum
+        unit:     floors
+        decimals: 0
+        color:    sage
+        span:     2
+
+      - type:     monthly
+        title:    Avg weight per month
+        metric:   weight
+        agg:      mean
+        unit:     kg
+        decimals: 1
+        color:    ink
+        span:     2

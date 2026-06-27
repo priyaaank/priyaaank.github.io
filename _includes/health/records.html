@@ -1,0 +1,11 @@
+{%- comment -%}
+  Records board (Hall of Fame). Renders one card per row of the
+  records CSV (CONFIG.records_source_url). JS fills [data-records-board].
+{%- endcomment -%}
+<div class="widget-head">
+  <span class="widget-title">{{ include.w.title }}</span>
+  <span class="widget-sub" data-records-sub></span>
+</div>
+<div class="records-board" data-records-board>
+  <div class="records-empty">Loading personal bests…</div>
+</div>

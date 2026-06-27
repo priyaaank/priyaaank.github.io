@@ -32,10 +32,19 @@
   let LOG = [];
   let LATEST = null;
 
+  // Hall of Fame rows, loaded independently from CONFIG.records_source_url.
+  // Not merged into LOG — the records board reads this directly.
+  let RECORDS = [];
+
   // Simple CSV parser. Assumes no embedded commas or quotes — fine
   // for the health schema (numbers, ISO dates, single-word enums,
   // TRUE/FALSE). Revisit if free-text columns get added.
-  function parseCSV(text) {
+  // `requireKey` is the column a row must carry to count as real. The daily/
+  // weekly logs key on `date`; the records sheet keys on `label` (its rows
+  // may legitimately have no date). String columns (label/unit/detail/color)
+  // fall through to the else branch and stay as text.
+  function parseCSV(text, requireKey) {
+    const reqKey = requireKey || 'date';
     const lines = text.replace(/^﻿/, '').trim().split(/\r?\n/);
     if (lines.length < 2) return [];
     const headers = lines[0].split(',').map(s => s.trim());
@@ -48,7 +57,8 @@
         const key = headers[j];
         const raw = (cells[j] || '').trim();
         if (raw === '') continue;
-        if (key === 'date') {
+        if (key === 'date' || key === 'label' || key === 'unit' ||
+            key === 'detail' || key === 'color') {
           row[key] = raw;
         } else if (raw === 'TRUE' || raw === 'true')  { row[key] = true;  }
         else   if (raw === 'FALSE' || raw === 'false'){ row[key] = false; }
@@ -57,15 +67,15 @@
           row[key] = (raw !== '' && !Number.isNaN(n) && /^-?\d/.test(raw)) ? n : raw;
         }
       }
-      if (row.date) rows.push(row);
+      if (row[reqKey] !== undefined) rows.push(row);
     }
     return rows;
   }
 
-  async function fetchCSV(url) {
+  async function fetchCSV(url, requireKey) {
     const res = await fetch(url, { credentials: 'omit' });
     if (!res.ok) throw new Error('CSV fetch failed: ' + res.status);
-    return parseCSV(await res.text());
+    return parseCSV(await res.text(), requireKey);
   }
 
   // Outer-join two row sets on `date`. Weekly entries (Sundays) typically
@@ -104,21 +114,31 @@
     return daily;
   }
 
+  // Hall of Fame rows from the dedicated records tab. Best-effort and keyed
+  // on `label` — a missing/unpublished tab just leaves the board empty.
+  async function loadRecords() {
+    if (!CONFIG.records_source_url) return [];
+    return fetchCSV(CONFIG.records_source_url, 'label');
+  }
+
   // Cache the last successful parse so subsequent visits paint instantly
   // and only swap when the fresh fetch returns. Bump CACHE_KEY when the
   // log schema changes.
   const CACHE_KEY = 'health-log-cache-v2';
-  function readCache() {
+  const RECORDS_CACHE_KEY = 'health-records-cache-v1';
+  function readCacheKey(key) {
     try {
-      const raw = localStorage.getItem(CACHE_KEY);
+      const raw = localStorage.getItem(key);
       const parsed = raw ? JSON.parse(raw) : null;
       return Array.isArray(parsed) ? parsed : null;
     } catch (e) { return null; }
   }
-  function writeCache(rows) {
-    try { localStorage.setItem(CACHE_KEY, JSON.stringify(rows)); }
+  function writeCacheKey(key, rows) {
+    try { localStorage.setItem(key, JSON.stringify(rows)); }
     catch (e) { /* quota exceeded or storage disabled — just skip */ }
   }
+  function readCache()  { return readCacheKey(CACHE_KEY); }
+  function writeCache(rows) { writeCacheKey(CACHE_KEY, rows); }
 
   const COLORS = {
     ink:   { line: '#1d1d1f', fill: 'rgba(29,29,31,0.08)',  target: '#8a8784' },
@@ -559,6 +579,149 @@
     }
   };
 
+  RENDERERS.records = function (el /*, rangeDays */) {
+    // Hall of Fame: one card per row of the records sheet (RECORDS).
+    // Open-ended and range-independent — a best is a best, all-time.
+    const board = el.querySelector('[data-records-board]');
+    const sub   = el.querySelector('[data-records-sub]');
+    if (!board) return;
+
+    if (!RECORDS.length) {
+      board.innerHTML = CONFIG.records_source_url
+        ? '<div class="records-empty">No personal bests recorded yet.</div>'
+        : '<div class="records-empty">Records sheet not configured.</div>';
+      if (sub) sub.textContent = '';
+      return;
+    }
+
+    board.innerHTML = '';
+    for (const r of RECORDS) {
+      const color = COLORS[r.color] ? r.color : 'ink';
+      const card = document.createElement('div');
+      card.className = 'record-card color-' + color;
+
+      const val = typeof r.value === 'number'
+        ? r.value.toLocaleString(undefined, {
+            maximumFractionDigits: Number.isInteger(r.value) ? 0 : 2,
+          })
+        : (r.value != null ? String(r.value) : '—');
+
+      const meta = [];
+      if (r.date)   meta.push(fmtRecordDate(r.date));
+      if (r.detail) meta.push(r.detail);
+
+      card.innerHTML =
+        '<div class="record-label">' + escapeHTML(r.label || '') + '</div>' +
+        '<div class="record-value">' + escapeHTML(val) +
+          (r.unit ? '<span class="record-unit">' + escapeHTML(r.unit) + '</span>' : '') +
+        '</div>' +
+        (meta.length ? '<div class="record-meta">' + escapeHTML(meta.join(' · ')) + '</div>' : '');
+      board.appendChild(card);
+    }
+
+    if (sub) {
+      sub.textContent = RECORDS.length + (RECORDS.length === 1 ? ' record' : ' records');
+    }
+  };
+
+  RENDERERS.monthly = function (el /*, rangeDays */) {
+    // Calendar-month rollup of a daily metric. Always all months (range
+    // switcher is irrelevant to a month-over-month view).
+    const metric   = el.dataset.metric;
+    const decimals = parseInt(el.dataset.decimals, 10) || 0;
+    const unit     = el.dataset.unit || '';
+    const agg      = (el.dataset.agg || 'sum').toLowerCase();
+    const palette  = paletteFor(el.dataset.color);
+
+    // Bucket numeric values by YYYY-MM.
+    const buckets = new Map();
+    for (const p of numericValues(LOG, metric)) {
+      const ym = p.date.slice(0, 7);
+      if (!buckets.has(ym)) buckets.set(ym, []);
+      buckets.get(ym).push(p.value);
+    }
+
+    const months = Array.from(buckets.keys()).sort();
+    const values = months.map(ym => aggregate(buckets.get(ym), agg));
+    const counts = months.map(ym => buckets.get(ym).length);
+    const labels = months.map(monthLabel);
+
+    const sub = el.querySelector('[data-monthly-sub]');
+    if (sub) {
+      const lastIdx = values.length - 1;
+      sub.textContent = lastIdx >= 0
+        ? labels[lastIdx] + ' · ' + fmt(values[lastIdx], decimals) + (unit ? ' ' + unit : '')
+        : '';
+    }
+
+    const canvas = el.querySelector('[data-monthly-canvas]');
+    if (!canvas || !window.Chart) return;
+    if (canvas._chart) { canvas._chart.destroy(); canvas._chart = null; }
+
+    const opts = chartCommon({ decimals, unit, palette });
+    // For additive rollups, surface the implied per-day average so months
+    // with missing days don't read as a real dip.
+    if (agg === 'sum') {
+      opts.plugins.tooltip.callbacks.afterLabel = (ctx) => {
+        const n = counts[ctx.dataIndex];
+        if (!n) return '';
+        return fmt(ctx.parsed.y / n, decimals) + (unit ? ' ' + unit : '') + '/day';
+      };
+    }
+
+    canvas._chart = new Chart(canvas, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          data: values,
+          backgroundColor: palette.line,
+          borderRadius: 2,
+          borderSkipped: false,
+          barPercentage: 0.7,
+          categoryPercentage: 0.85,
+        }],
+      },
+      options: opts,
+    });
+  };
+
+  // ------------------------------------------------------------
+  // Helpers for records / monthly
+  // ------------------------------------------------------------
+  function aggregate(arr, agg) {
+    if (!arr || !arr.length) return null;
+    switch (agg) {
+      case 'mean': return mean(arr);
+      case 'max':  return Math.max(...arr);
+      case 'min':  return Math.min(...arr);
+      case 'sum':
+      default:     return arr.reduce((s, x) => s + x, 0);
+    }
+  }
+
+  // 'YYYY-MM' → "Jun '26". Parsed in UTC for the same reason as daysAgo().
+  function monthLabel(ym) {
+    const d = new Date(ym + '-01T00:00:00Z');
+    if (Number.isNaN(d.getTime())) return ym;
+    return d.toLocaleDateString(undefined, { month: 'short', timeZone: 'UTC' }) +
+           " '" + ym.slice(2, 4);
+  }
+
+  function fmtRecordDate(iso) {
+    const d = new Date(iso + 'T00:00:00Z');
+    if (Number.isNaN(d.getTime())) return iso;
+    return d.toLocaleDateString(undefined, {
+      month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC',
+    });
+  }
+
+  function escapeHTML(s) {
+    return String(s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
   // ------------------------------------------------------------
   // Chart.js shared options
   // ------------------------------------------------------------
@@ -671,6 +834,21 @@
       applyLog(cached);
       renderAll(activeRange(initial));
     }
+    const cachedRecords = readCacheKey(RECORDS_CACHE_KEY);
+    if (cachedRecords && cachedRecords.length) {
+      RECORDS = cachedRecords;
+      renderAll(activeRange(initial));
+    }
+
+    // Records load independently of the daily log — a failure or empty
+    // result on either side must not block the other.
+    loadRecords()
+      .then(rows => {
+        RECORDS = rows;
+        writeCacheKey(RECORDS_CACHE_KEY, rows);
+        renderAll(activeRange(initial));
+      })
+      .catch(e => console.warn('Failed to load records', e));
 
     try {
       const raw = await loadLog();
