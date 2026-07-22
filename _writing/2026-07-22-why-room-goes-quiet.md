@@ -5,8 +5,6 @@ slug: conversational-equality
 tags: [culture, interpersonal-skills]
 description: Why capable people stay silent in meetings, and the mechanical moves leaders can use to level the field and let the good ideas out.
 ---
-
-# Why the Room Goes Quiet
  
 We've all been in that meeting. A decision is being made, a plan is being set, and half the room says nothing. Later, over coffee, the quiet ones turn out to have had the sharpest opinions all along. So why didn't they say them?
  
