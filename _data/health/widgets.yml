@@ -51,7 +51,7 @@ weekly_source_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR1KuBIXuMYa
 records_source_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vR1KuBIXuMYaL-Jq05IE0-IqoVJLJ7bNEJg32x7ttuOXGo2vZI_knNw3mToozdIIWlfGyFu-zcW3hWm/pub?gid=1001279541&single=true&output=csv"
 
 # Default lookback for the dashboard (days). Switch in the UI.
-range_default: 30
+range_default: 90
 
 # Available range presets in the time-range switcher.
 range_presets:
@@ -105,6 +105,12 @@ sections:
         cadence:  daily
         color:    amber
         span:     1
+
+      - type:     consistency
+        title:    Unwell streak
+        metric:   unwell
+        cadence:  daily
+        span:     2
 
   - id: body
     title: Body
@@ -180,10 +186,6 @@ sections:
         color:    amber
         span:     2
 
-  - id: activity
-    title: Activity
-    description: Daily movement, climbs, and loaded carries.
-    widgets:
       - type:     stat
         title:    Avg steps
         metric:   steps
@@ -191,6 +193,11 @@ sections:
         decimals: 0
         target:   8000
         color:    amber
+
+  - id: activity
+    title: Activity
+    description: Daily movement, climbs, and loaded carries.
+    widgets:
 
       - type:     stat
         title:    Avg active kcal
@@ -204,15 +211,6 @@ sections:
         metric:   floors
         decimals: 0
         color:    sage
-
-      - type:     bar
-        title:    Pack weight carried
-        metric:   pack_kg
-        unit:     kg
-        decimals: 1
-        cadence:  daily
-        color:    ink
-        span:     1
 
       - type:     bar
         title:    Steps per day
